@@ -1,0 +1,27 @@
+{
+  "name": "youzz",
+  "description": "",
+  "main": "resources/assets/js/app.js",
+  "authors": [
+    "Bruno Silva <bruno.b.silva@co.sapo.pt>"
+  ],
+  "license": "MIT",
+  "homepage": "http://youzz.net",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.4",
+    "bootstrap-sass": "^3.3.6",
+    "font-awesome": "Font-Awesome#^4.6.3",
+    "bootstrap-combobox": "^1.1.7",
+    "angular": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-bootstrap": "angular-ui-bootstrap-bower#^2.1.3"
+  }
+}
