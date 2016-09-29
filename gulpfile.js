@@ -7,7 +7,7 @@ var gulp = require("gulp"),
 ;
 
 gulp.task('scss', function () {
-    return gulp.src('src/scss/reviews.scss')
+    return gulp.src('src/scss/widgets.scss')
       .pipe(sourcemaps.init())
       .pipe(sass().on('error', sass.logError))
       .pipe(sourcemaps.write('.'))
@@ -15,8 +15,8 @@ gulp.task('scss', function () {
 });
 
 gulp.task("min:css", ['scss'], function () {
-    return gulp.src(['dist/css/reviews.css'])
-		.pipe(concat('dist/css/reviews.min.css'))
+    return gulp.src(['dist/css/widgets.css'])
+		.pipe(concat('dist/css/widgets.min.css'))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
@@ -43,12 +43,17 @@ gulp.task("min:js", ['angular:templates'], function () {
 		.pipe(gulp.dest('.'));
 });
 
-gulp.task('fonts', function () {
+gulp.task('fonts:font-awesome', function () {
     return gulp.src(['bower_components/font-awesome/fonts/*'])
-            .pipe(gulp.dest('dist/fonts/font-awesome'));
+            .pipe(gulp.dest('dist/fonts'));
 });
 
-gulp.task('build', ['min:css', 'min:js', 'fonts']);
+gulp.task('fonts:bootstrap', function () {
+    return gulp.src(['bower_components/bootstrap-sass/assets/fonts/bootstrap/*'])
+            .pipe(gulp.dest('dist/fonts/bootstrap'));
+});
+
+gulp.task('build', ['min:css', 'min:js', 'fonts:font-awesome', 'fonts:bootstrap']);
 
 gulp.task('watch', function () {
     gulp.watch(

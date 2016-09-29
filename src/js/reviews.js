@@ -66,10 +66,12 @@
             controller: ['$scope', '$element', function($scope, $element) {
                 $scope.sortField = 'DateCreated';
                 $scope.currentPage = 1;
+                $scope.loading = true;
                 if (angular.isUndefined($scope.pageSize)) {
                     $scope.pageSize = 25;
                 }
                 $scope.$watchGroup(['sortField', 'currentPage'], function() {
+                    $scope.loading = true;
                     var params = {
                         productId: $scope.productId,
                         offset: ($scope.currentPage - 1) * $scope.pageSize,
@@ -80,6 +82,7 @@
                     Product.reviews(params).$promise.then(function(response) {
                         $scope.reviews = response.items;
                         $scope.totalItems = response.pagination.totalRecords;
+                        $scope.loading = false;
                     });
                 });
             }],

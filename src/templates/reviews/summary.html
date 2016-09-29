@@ -13,9 +13,11 @@
 
                 <div class="star-rating" aria-hidden="true">
                     <ul>
-                        <li><i class="filled"></i></li>
-                        <li><i class="half"></i></li>
-                        <li><i class=""></i></li>
+                        <li data-ng-repeat="i in [1,2,3,4,5]">
+                            <i data-ng-show="product.reviewSummary.averageRating >= i" class="filled"></i>
+                            <i data-ng-show="product.reviewSummary.averageRating > i-1 && product.reviewSummary.averageRating < i"class="half"></i>
+                            <i data-ng-show="product.reviewSummary.averageRating <= i-1" class=""></i>
+                        </li>
                     </ul>
                     <span class="sr-only">Average rating: {{ product.reviewSummary.averageRating | number:1 }}</span>
                 </div>

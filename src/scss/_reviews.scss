@@ -1,0 +1,210 @@
+
+/* Single Review
+--------------------------------------------------------------- */
+.product-reviews {
+    .review {
+        border-bottom: 1px solid darken($grey, 10%);
+        padding: 40px;
+        @media(min-width: $screen-md-min) {
+            padding: 40px 0;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 32px;
+            margin-bottom: 20px;
+        }
+
+        .review-title {
+            font-weight: 700;
+
+            span {
+                color: $youzzYellow;
+                display: inline-block;
+                font-size: 14px;
+            }
+        }
+
+        .review-image {
+            img {
+                max-width: 150px;
+                max-height: 150px;
+                margin-bottom: 30px;
+                @media(min-width: $screen-md-min) {
+                    margin-bottom: 0;
+                    max-width: 128px;
+                }
+            }
+        }
+
+        .review-meta {
+            text-transform: uppercase;
+            padding-left: 0;
+
+            li {
+                display: block;
+                list-style: none;
+                margin-right: 10px;
+                font-size: 10px;
+                color: $grey;
+                line-height: 32px;
+                @media(min-width: $screen-md-min) {
+                    display: inline-block;
+                }
+
+                i {
+                    padding-right: 5px;
+                }
+
+                &:nth-child(1) {
+                    color: $youzzPink;
+                }
+
+                &:nth-child(2) {
+                    color: $youzzGreen;
+                }
+
+                &:nth-child(3) {
+                    color: $youzzBlue;
+                }
+            }
+        }
+    }
+}
+/* Aside
+--------------------------------------------------------------- */
+aside {
+    margin-bottom: 40px;
+
+    ul {
+        li {
+            list-style: none;
+            line-height: 30px;
+
+            p {
+                display: inline;
+
+                &.star-order {
+                    float: left;
+                    display: inline-block;
+                    margin-top: 0;
+                    line-height: 10px;
+                    font-weight: bold;
+                    margin-right: 10px;
+
+                    span {
+                        opacity: 0.7;
+                        font-weight: 100;
+                        font-size: 11px;
+                    }
+
+                    &::after {
+                        @include fa-icon;
+                        content: $fa-var-star;
+                        color: $youzzYellow;
+                        padding-left: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+/* Progress Bars
+--------------------------------------------------------------- */
+.progress,
+.progress-bar {
+    border-radius: 20px;
+    height: 10px;
+}
+
+.progress {
+    margin-left: 10px;
+}
+/* Product Spotlight
+--------------------------------------------------------------- */
+.product-spotlight {
+    font-family: $bodyFont;
+    background: darken($grey, 2%);
+    padding: 60px 0;
+    margin-bottom: 60px;
+    position: relative;
+
+
+
+    img {
+        max-width: 90%;
+        background: $white;
+        padding: 5px;
+        float: left;
+        @media(min-width: $screen-md-min) {
+            width: 80%;
+        }
+    }
+
+    button {
+        margin: 30px 0;
+        float: left;
+
+        @media(min-width: $screen-md-min) {
+            float: right;
+        }
+    }
+
+    .product-name {
+        font-size: 32px;
+        font-weight: bold;
+        padding: 20px 0;
+        line-height: 32px;
+    }
+
+    .star-rating {
+        font-size: 32px;
+
+        ul {
+            @extend .list-unstyled, .list-inline;
+
+            li {
+                padding: 0;
+            }
+        }
+
+        i.filled:before {
+            @include fa-icon;
+            content: $fa-var-star;
+            color: $youzzYellow;
+        }
+
+        i.half:before {
+            @include fa-icon;
+            content: $fa-var-star-half-o;
+            color: $youzzYellow;
+        }
+
+        i:before {
+            @include fa-icon;
+            content: $fa-var-star-o;
+            color: $youzzYellow;
+        }
+    }
+
+    .summary {
+        font-size: 18px;
+
+        span {
+            font-weight: bold;
+        }
+    }
+}
+
+.review-distribution {
+    list-style-type: none;
+}
+
+.review {
+  margin: 0px!important;
+
+    h1 {
+        font-size: $font-size-base;
+        font-weight: 900;
+    }
+}
