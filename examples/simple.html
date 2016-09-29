@@ -1,32 +1,16 @@
 <html>
-    <head>
-		<link href="/dist/css/reviews.min.css" rel="stylesheet" />
-    </head>
 
-    <body>
-        <section id="ReviewsWidget" ng-controller="ReviewListController" ng-init="init()">
-            <article ng-cloak class="row review table" ng-repeat="review in reviews">
-                <div class="review-image col-md-1 col-xs-12 table-col">
-                    <img class="img-circle" ng-src="@{{review.reviewer.avatar}}" alt="@{{review.reviewer.firstName}} @{{review.reviewer.lastName}}">
-                </div>
-                <div class="col-md-10 table-col pull-right">
-                    <p class="review-title">@{{review.title}}
-                        <span uib-rating state-on="'fa fa-star'" state-off="'fa fa-star-o'" max="5" ng-model="review.value" read-only="true"></span>
-                    </p>
-                    <p class="review-text">@{{review.text | limitTo:300 }}</p>
+<head>
+    <link href="/dist/css/reviews.min.css" rel="stylesheet" />
+</head>
 
-                    <ul class="review-meta col-md-12">
-                        <li> <i class="fa fa-archive" aria-hidden="true"></i>{{ $product.name }}</li>
-                        <li ng-show="review.reviewer"><i class="fa fa-male" aria-hidden="true"></i>@{{review.reviewer.firstName}} @{{review.reviewer.lastName}}</li>
-                        <li><i class="fa fa-calendar-o" aria-hidden="true"></i>@{{review.dateCreated | date: 'dd-MM-yyyy'}}</li>
-                    </ul>
-                </div>
-            </article>
-            <div>
-                <ul class="ng-hide" ng-show="reviews" uib-pagination ng-change="loadPage()" first-text="'{{ trans('First') }}'" last-text="'{{ trans('Last') }}'" total-items="totalItems" items-per-page="20" ng-model="currentPage"></ul>
-            </div>
-        </section>
-		<script src="/dist/js/reviews.js"></script>
-    </body>
+<body>
+    <section data-youzz-widgets>
+        <div data-summary product-id="1"></div>
+        <div data-distribution data-product-id="1"></div>
+        <div data-list data-product-id="1" data-page-size="10"></div>
+    </section>
+    <script src="/dist/js/widgets.js"></script>
+</body>
 
 </html>

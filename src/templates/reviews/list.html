@@ -1,0 +1,21 @@
+<article ng-cloak class="row review table" ng-repeat="review in reviews">
+    <div class="review-image col-md-1 col-xs-12 table-col">
+        <img class="img-circle" ng-src="{{review.reviewer.avatar}}" alt="{{review.reviewer.firstName}} {{review.reviewer.lastName}}">
+    </div>
+    <div class="col-md-10 table-col pull-right">
+        <p class="review-title">{{review.title}}
+            <span uib-rating state-on="'fa fa-star'" state-off="'fa fa-star-o'" max="5" ng-model="review.value" read-only="true"></span>
+        </p>
+        <p class="review-text">{{review.text | limitTo:300 }}</p>
+
+        <ul class="review-meta col-md-12">
+            <li> <i class="fa fa-archive" aria-hidden="true"></i>{{ $product.name }}</li>
+            <li ng-show="review.reviewer"><i class="fa fa-male" aria-hidden="true"></i>{{review.reviewer.firstName}} {{review.reviewer.lastName}}</li>
+            <li><i class="fa fa-calendar-o" aria-hidden="true"></i>{{review.dateCreated | date: 'dd-MM-yyyy'}}</li>
+        </ul>
+    </div>
+</article>
+{{currentPage}}
+<div>
+    <ul class="ng-hide" ng-show="reviews && totalItems > pageSize" uib-pagination first-text="'First'" last-text="'Last'" total-items="totalItems" items-per-page="pageSize" ng-model="currentPage"></ul>
+</div>

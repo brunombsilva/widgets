@@ -2,7 +2,9 @@ var gulp = require("gulp"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     sass = require("gulp-sass"),
-    sourcemaps = require('gulp-sourcemaps');
+    sourcemaps = require('gulp-sourcemaps'),
+    templateCache = require('gulp-angular-templatecache')
+;
 
 gulp.task('scss', function () {
     return gulp.src('src/scss/reviews.scss')
@@ -19,15 +21,23 @@ gulp.task("min:css", ['scss'], function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:js", function () {
+gulp.task('angular:templates', function () {
+  return gulp.src('src/templates/**/*.html')
+    .pipe(templateCache({module:'Youzz.Widgets.Templates', standalone:true}))
+    .pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task("min:js", ['angular:templates'], function () {
     return gulp.src([
 		'bower_components/jquery/dist/jquery.js',
 		'bower_components/angular/angular.js',
 		'bower_components/angular-resource/angular-resource.js',
 		'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-		'src/js/reviews.js'
+        'dist/js/templates.js',
+		'src/js/reviews.js',
+		'src/js/widgets.js'
 		])
-        .pipe(concat('dist/js/reviews.js'))
+        .pipe(concat('dist/js/widgets.js'))
     // .pipe(uglify())
 		.pipe(gulp.dest('.'));
 });
@@ -45,7 +55,7 @@ gulp.task('watch', function () {
             ['min:css']
     );
     gulp.watch(
-            "src/js/**/*.js",
+            ["src/js/**/*.js", "src/templates/**/*.html"],
             ['min:js']
     );
 });

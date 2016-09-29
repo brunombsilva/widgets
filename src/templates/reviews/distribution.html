@@ -1,0 +1,15 @@
+<aside class="col-md-2 no-gutter sidebar-rating">
+    <h4>Distribution</h4>
+
+    <ul class="col-md-8 no-gutter progress-bars">
+        <li data-ng-repeat="(value,frequency) in product.reviewSummary.ratingFrequencyDistribution">
+            <p class="star-order">
+                {{value}}
+            </p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{frequency}}" aria-valuemin="0" aria-valuemax="{{product.reviewSummary.totalReviews}}" style="width:{{ frequency/product.reviewSummary.totalReviews * 100 | number:0}}%">
+                </div>
+            </div>
+        </li>
+    </ul>
+</aside>
