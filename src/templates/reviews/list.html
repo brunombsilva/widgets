@@ -1,12 +1,12 @@
 <section class="product-reviews">
     <div class="col-md-12">
         <div class="col-md-5 col-xs-8">
-            <h4>Product Reviews</h4>
+            <h4>{{ 'Product Reviews' | translate }}</h4>
         </div>
         <div class="col-md-2 col-xs-4 pull-right">
             <select class="form-control" data-ng-model="sortField">
-                <option value="DateCreated">Date</option>
-                <option value="Value">Rating</option>
+                <option value="DateCreated">{{ 'Date' | translate }}</option>
+                <option value="Value">{{ 'Rating' | translate }}</option>
             </select>
         </div>
     </div>
@@ -21,7 +21,7 @@
             <p class="review-title">{{review.title}}
                 <span data-uib-rating data-state-on="'fa fa-star'" data-state-off="'fa fa-star-o'" data-max="5" data-ng-model="review.value" data-read-only="true"></span>
             </p>
-            <p class="review-text">{{review.text | limitTo:300 }}</p>
+            <p class="review-text">{{review.text}}</p>
 
             <ul class="review-meta col-md-12">
                 <li> <i class="fa fa-archive" aria-hidden="true"></i>{{ $product.name }}</li>
@@ -31,6 +31,6 @@
         </div>
     </article>
     <div>
-        <ul class="ng-hide" data-ng-show="reviews && totalItems > pageSize" data-uib-pagination data-first-text="'First'" data-last-text="'Last'" data-total-items="totalItems" data-items-per-page="pageSize" data-ng-model="currentPage"></ul>
+        <ul class="ng-hide" data-ng-show="reviews && totalItems > pageSize" data-uib-pagination data-total-items="totalItems" data-items-per-page="pageSize" data-ng-model="currentPage"></ul>
     </div>
 </section>

@@ -7,8 +7,8 @@
             <div class="col-xs-8 col-md-6 col-lg-6 table-col v-align">
                 <h2 class="product-name">{{ product.name }}</h2>
                 <div class="summary">
-                    <p><span>{{ product.reviewSummary.averageRating | number:1 }}</span> from
-                        <span>{{ product.reviewSummary.totalReviews }} reviews</span></p>
+                    <p><span>{{ product.reviewSummary.averageRating | number:1 }}</span> {{ 'from' | translate }}
+                        <span>{{ product.reviewSummary.totalReviews }} {{ 'reviews' | translate }}</span></p>
                 </div>
 
                 <div class="star-rating" aria-hidden="true">
@@ -19,7 +19,7 @@
                             <i data-ng-show="product.reviewSummary.averageRating <= i-1" class=""></i>
                         </li>
                     </ul>
-                    <span class="sr-only">Average rating: {{ product.reviewSummary.averageRating | number:1 }}</span>
+                    <span class="sr-only">{{'Average rating' | translate }}: {{ product.reviewSummary.averageRating | number:1 }}</span>
                 </div>
 
             </div>

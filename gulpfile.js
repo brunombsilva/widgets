@@ -34,6 +34,7 @@ gulp.task("min:js", ['angular:templates'], function () {
 		'bower_components/angular-resource/angular-resource.js',
         'bower_components/angular-bootstrap/ui-bootstrap.js',
 		'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+		'bower_components/angular-translate/angular-translate.js',
         'dist/js/templates.js',
 		'src/js/api.js',
 		'src/js/reviews.js',
