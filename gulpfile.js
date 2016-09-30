@@ -3,6 +3,8 @@ var gulp = require("gulp"),
     cssmin = require("gulp-cssmin"),
     sass = require("gulp-sass"),
     sourcemaps = require('gulp-sourcemaps'),
+    merge = require('gulp-merge-json'),
+    textTransformation = require('gulp-text-simple')
     templateCache = require('gulp-angular-templatecache')
 ;
 
@@ -21,13 +23,27 @@ gulp.task("min:css", ['scss'], function () {
         .pipe(gulp.dest("."));
 });
 
+gulp.task('angular:i18n:locales', function() {
+    return gulp.src('src/i18n/*.json')
+        .pipe(merge('i18n.locales.json')).pipe(gulp.dest('dist/js/'));
+});
+
+gulp.task('angular:i18n', ['angular:i18n:locales'], function() {
+    return gulp.src('dist/js/i18n.locales.json')
+        .pipe(textTransformation(function(text) {
+            return "angular.module('Youzz.i18n', []).constant('Locales', :locales:);".replace(/:locales:/,text);
+        })())
+        .pipe(concat('dist/js/i18n.js'))
+        .pipe(gulp.dest('.'));
+});
+
 gulp.task('angular:templates', function () {
   return gulp.src('src/templates/**/*.html')
     .pipe(templateCache({module:'Youzz.Widgets.Templates', standalone:true}))
     .pipe(gulp.dest('dist/js/'));
 });
 
-gulp.task("min:js", ['angular:templates'], function () {
+gulp.task("min:js", ['angular:templates', 'angular:i18n'], function () {
     return gulp.src([
 		'bower_components/jquery/dist/jquery.js',
 		'bower_components/angular/angular.js',
@@ -36,6 +52,7 @@ gulp.task("min:js", ['angular:templates'], function () {
 		'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
 		'bower_components/angular-translate/angular-translate.js',
         'dist/js/templates.js',
+		'dist/js/i18n.js',
 		'src/js/api.js',
 		'src/js/reviews.js',
 		'src/js/widgets.js'
@@ -67,3 +84,5 @@ gulp.task('watch', function () {
             ['min:js']
     );
 });
+
+gulp.task('default', ['build', 'watch']);
