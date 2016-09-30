@@ -1,6 +1,9 @@
 (function($, window, angular) {
     'use strict';
 
+    var container = document.querySelector('[data-youzz-widgets]');
+    var locale = container.dataset.youzzWidgetsLocale || 'pt';
+
     var module = angular.module('Youzz.Widgets', ['Youzz.Widgets.Reviews', 'pascalprecht.translate', 'Youzz.i18n']);
     angular.module('Youzz.Api')
         .value('token', YouzzToken)
@@ -13,8 +16,8 @@
             $translateProvider.translations(key, value);
         });
 
-        $translateProvider.preferredLanguage('pt');
+        $translateProvider.preferredLanguage(locale);
     }]);
 
-    angular.bootstrap(document.querySelector('[data-youzz-widgets]'), ['Youzz.Widgets']);
+    angular.bootstrap(container, ['Youzz.Widgets']);
 }(jQuery, window, angular));
