@@ -20,7 +20,7 @@
         );
     }]);
 
-    module.directive('distribution', ['Product', '$templateCache', function(Product, $templateCache) {
+    module.directive('reviewsDistribution', ['Product', '$templateCache', function(Product, $templateCache) {
         return {
             restrict: "A",
             scope: {
@@ -38,7 +38,7 @@
         };
     }]);
 
-    module.directive('summary', ['Product', '$templateCache', function(Product, $templateCache) {
+    module.directive('reviewsSummary', ['Product', '$templateCache', function(Product, $templateCache) {
         return {
             restrict: "A",
             scope: {
@@ -56,12 +56,12 @@
         };
     }]);
 
-    module.directive('list', ['Product', '$templateCache', function(Product, $templateCache) {
+    module.directive('reviewsList', ['Product', '$templateCache', function(Product, $templateCache) {
         return {
             restrict: "A",
             scope: {
                 productId: '=',
-                pageSize: '='
+                pageSize: '@'
             },
             controller: ['$scope', '$element', function($scope, $element) {
                 $scope.sortField = 'DateCreated';

@@ -5,7 +5,7 @@
     //module.value('token', undefined);
     //module.value('endpoint', undefined);
 
-    module.factory('Api', ['$resource', 'endpoint', 'token', function($resource, endpoint, token) {
+    module.factory('Api', ['$resource', 'endpoint', 'clientId', function($resource, endpoint, clientId) {
         return function(path, paramDefaults, actions, options) {
             var actions = angular.extend({}, actions);
 
@@ -16,7 +16,8 @@
                     {},
                     value.headers, 
                     {
-                        'Authorization': 'Bearer ' + token
+                        'ClientId': clientId
+                        //'Authorization': 'Bearer ' + token
                     }
                 );
             });
