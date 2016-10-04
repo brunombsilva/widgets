@@ -8,70 +8,59 @@
             'products/:productId', {
                 productId: '@productId'
             }, {
-                get: {
-                    url: 'products/:productId',
-                    method: 'GET',
-                },
+                get: {},
                 reviews: {
+                    isArray: true,
                     url: 'products/:productId/reviews',
-                    method: 'GET',
                 }
             }
         );
     }]);
 
-    module.directive('reviewsDistribution', ['Product', '$templateCache', function(Product, $templateCache) {
+    module.directive('reviewsDistribution', ['Product', function(Product) {
         return {
             restrict: "A",
             scope: {
-                productId: '='
+                productId: '@'
             },
-            controller: ['$scope', '$element', function($scope, $element) {
-                $scope.product = undefined;
-                Product.get({
+            link: function($scope) {
+                $scope.product = Product.get({
                     productId: $scope.productId
-                }).$promise.then(function(product) {
-                    $scope.product = product;
                 });
-            }],
-            template: $templateCache.get('reviews/distribution.html')
+            },
+            templateUrl: 'reviews/distribution.html'
         };
     }]);
 
-    module.directive('reviewsSummary', ['Product', '$templateCache', function(Product, $templateCache) {
+    module.directive('reviewsSummary', ['Product', function(Product) {
         return {
             restrict: "A",
             scope: {
-                productId: '='
+                productId: '@'
             },
-            controller: ['$scope', '$element', function($scope, $element) {
-                $scope.product = undefined;
-                Product.get({
+            link: function($scope) {
+                $scope.product = Product.get({
                     productId: $scope.productId
-                }).$promise.then(function(product) {
-                    $scope.product = product;
                 });
-            }],
-            template: $templateCache.get('reviews/summary.html')
+            },
+            templateUrl: 'reviews/summary.html'
         };
     }]);
 
-    module.directive('reviewsList', ['Product', '$templateCache', function(Product, $templateCache) {
+    module.directive('reviewsList', ['Product', function(Product) {
         return {
             restrict: "A",
             scope: {
-                productId: '=',
+                productId: '@',
                 pageSize: '@'
             },
-            controller: ['$scope', '$element', function($scope, $element) {
+            link: function($scope) {
                 $scope.sortField = 'DateCreated';
                 $scope.currentPage = 1;
-                $scope.loading = true;
                 if (angular.isUndefined($scope.pageSize)) {
                     $scope.pageSize = 25;
                 }
                 $scope.$watchGroup(['sortField', 'currentPage'], function() {
-                    $scope.loading = true;
                     var params = {
                         productId: $scope.productId,
                         offset: ($scope.currentPage - 1) * $scope.pageSize,
@@ -79,14 +68,10 @@
                         sortField: $scope.sortField
                     };
 
-                    Product.reviews(params).$promise.then(function(response) {
-                        $scope.reviews = response.items;
-                        $scope.totalItems = response.pagination.totalRecords;
-                        $scope.loading = false;
-                    });
+                    $scope.reviews = Product.reviews(params);
                 });
-            }],
-            template: $templateCache.get('reviews/list.html')
+            },
+            templateUrl: 'reviews/list.html'
         };
     }]);
 }(jQuery, window, angular));

@@ -10,7 +10,7 @@
             </select>
         </div>
     </div>
-    <div data-ng-show="loading" class="text-center">
+    <div data-ng-show="!reviews.$resolved" class="text-center">
         <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
     </div>
     <article data-ng-cloak class="row review table" data-ng-repeat="review in reviews">
@@ -31,6 +31,6 @@
         </div>
     </article>
     <div>
-        <ul class="ng-hide" data-ng-show="reviews && totalItems > pageSize" data-uib-pagination data-total-items="totalItems" data-items-per-page="pageSize" data-ng-model="currentPage"></ul>
+        <ul class="ng-hide" data-ng-show="reviews && totalItems > pageSize" data-uib-pagination data-total-items="reviews.pagination.totalItems" data-items-per-page="pageSize" data-ng-model="currentPage"></ul>
     </div>
 </section>
