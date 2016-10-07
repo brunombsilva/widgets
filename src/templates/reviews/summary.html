@@ -1,0 +1,28 @@
+<section class="product-spotlight">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-lg-2 table-col v-align">
+                <img data-ng-show="product.image" src="{{ product.image.url }}" alt="{{ product.image.alternateText || product.name }}" />
+            </div>
+            <div class="col-xs-8 col-md-6 col-lg-6 table-col v-align">
+                <h2 class="product-name">{{ product.name }}</h2>
+                <div class="summary">
+                    <p><span>{{ product.reviewSummary.averageRating | number:1 }}</span> {{ 'from' | translate }}
+                        <span>{{ product.reviewSummary.totalReviews }} {{ 'reviews' | translate }}</span></p>
+                </div>
+
+                <div class="star-rating" aria-hidden="true">
+                    <ul>
+                        <li data-ng-repeat="i in [1,2,3,4,5]">
+                            <i data-ng-show="product.reviewSummary.averageRating >= i" class="filled"></i>
+                            <i data-ng-show="product.reviewSummary.averageRating > i-1 && product.reviewSummary.averageRating < i"class="half"></i>
+                            <i data-ng-show="product.reviewSummary.averageRating <= i-1" class=""></i>
+                        </li>
+                    </ul>
+                    <span class="sr-only">{{'Average rating' | translate }}: {{ product.reviewSummary.averageRating | number:1 }}</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
