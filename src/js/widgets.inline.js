@@ -65,6 +65,9 @@
 
 
     var loader = d.YouzzWidgets && d.YouzzWidgets.Loader ? d.YouzzWidgets.Loader : {},
+        
+        // the YouzzWidgets..Instance.initialize is expected to be invoked only once, after all the angular directives
+        // are placed in the DOM
         callback = function() {
             loader.loadedDependencies++;
 
@@ -74,7 +77,8 @@
         },
         script, params, idx;
 
-    // render the widget template for the current widget instance
+    // we need to determine what script inclusion we're currently dealing with (as is expected for the script to be included multiple times asynchronously)
+    // and right bellow it render the HTML node that'll be picked up by angular
     loader.loadedInline = loader.loadedInline === undefined ? 0 : loader.loadedInline + 1;
     script = d.querySelectorAll('script[data-yw-script]')[loader.loadedInline];
     params = parseUrlQueryString(script.src);
