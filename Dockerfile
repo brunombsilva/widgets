@@ -17,7 +17,7 @@ RUN cd /app && bower install --allow-root
 
 RUN cd /app && gulp build
 
-RUN ln -s /app /srv/http/widgets
+RUN mkdir -p /srv/http && ln -s /app /srv/http/widgets
 
 VOLUME  ["/srv/http/widgets"]
 CMD ["/usr/bin/tail", "-f", "/dev/null"]
