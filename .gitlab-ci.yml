@@ -1,0 +1,64 @@
+image: docker:1.11
+services:
+    - docker:1.11-dind
+
+stages:
+    - build
+    - test
+    - release
+
+variables:
+    DOCKER_DRIVER: overlay
+    GIT_STRATEGY: fetch
+    DOCKER_REGISTRY: gitlab.youzz.net:4567
+    PROJECT_USER: youzz
+    PROJECT_NAME: widgets
+    CONTAINER_NAME: widgets
+
+before_script:
+    - export CONTAINER_IMAGE=$DOCKER_REGISTRY/$PROJECT_USER/$PROJECT_NAME:${CI_BUILD_REF_NAME/\//-}
+    - export CONTAINER_RELEASE_IMAGE=$DOCKER_REGISTRY/$PROJECT_USER/$PROJECT_NAME:$CI_BUILD_TAG
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY
+
+# create the composer image for the current build job
+Build docker image:
+  stage: build
+  script:
+    #- echo "$DEPLOY_KEY" > deploy_rsa
+    - docker build -t $CONTAINER_IMAGE .
+
+# create and push the image to the registry if a tag new was pushed - these are the images used to deploy
+# the application to the production environment
+Push production image:
+  stage: release
+  tags:
+    - vip
+  only:
+    - tags
+  script:
+    - docker tag $CONTAINER_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+
+
+# create and push the image to the registry if the commit is in the develop branch - these
+# are the images used to deploy the app to the staging environment
+Push staging image:
+  stage: release
+  only:
+      - develop
+  script:
+    - docker push $CONTAINER_IMAGE
+
+
+# Builds and registers an image against the docker registry. This action can only
+# be executed manually
+"Build & register image":
+    stage: build
+    script:
+        #- echo "$DEPLOY_KEY" > deploy_rsa
+        - docker build -t $CONTAINER_IMAGE .
+        - docker push $CONTAINER_IMAGE
+    when: manual
+
+
