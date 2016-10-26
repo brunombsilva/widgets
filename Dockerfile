@@ -6,7 +6,7 @@ RUN  apt-get update
 RUN  apt-get -y install curl
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs git tail
+RUN apt-get install -y nodejs git
 RUN npm install -g bower
 RUN npm install -g gulp
 
@@ -18,4 +18,4 @@ RUN cd /app && bower install --allow-root
 RUN cd /app && gulp build
 
 VOLUME  ["/app"]
-CMD ["tail" "-f" "/var/log/syslog"]
+CMD ["tail" "-f" "/var/log/*.log"]
