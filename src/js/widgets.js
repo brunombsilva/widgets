@@ -25,6 +25,7 @@
             this.modules.api.value({clientId, clientId, endpoint: config.apiUrl});
             this.modules.widgets.value('locale', locale);
 
+            // TODO - Move this to the Youzz.Widgets module
             this.modules.widgets.config(['$translateProvider', 'Locales', function($translateProvider, Locales) {
                 $translateProvider.useSanitizeValueStrategy('escape');
 
