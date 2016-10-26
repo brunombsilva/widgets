@@ -18,4 +18,4 @@ RUN cd /app && bower install --allow-root
 RUN cd /app && gulp build
 
 VOLUME  ["/app"]
-CMD ["tail" "-f" "/var/log/*.log"]
+CMD ["/usr/bin/tail", "-f", "/dev/null"]
