@@ -1,34 +1,104 @@
-(function() {
+(function(d, w) {
     'use strict';
-	var scripts = document.getElementsByTagName('script');
-	var index = scripts.length - 1;
-	var myScript = scripts[index];
-    //TODO: generic approach to prevent being locked to parameters order
-	var parameters = /clientId=(.*)&locale=(.*)&widget=(.*)&productId=(.*)/.exec(myScript.src);
-	var clientId = parameters[1];
-	var locale = parameters[2];
-	var widget = parameters[3];
-    //generic support for parameters for different widgets (eg, some widgets require productId, other a potatoId, etc)
-	var productId = parameters[4];
-    var head  = document.getElementsByTagName('head')[0];
+    
+    var config = d.YouzzWidgets.Config,
+        defaults = {
+            initialized: false,
+            clientId: null,
+            locale: 'pt'
+        };
 
-        if (!document.getElementById('youzzWidgetsCss')) {
-            //append only once
-            var link  = document.createElement('link');
-            link.id = 'youzzWidgetsCss';
-            link.rel  = 'stylesheet';
-            link.type = 'text/css';
-            //TODO: assets url from gulp recipe
-            link.href = '/dist/css/widgets.min.css';
-            link.media = 'all';
-            head.appendChild(link);
+    function loadStylesheet(href) {
+        var el = d.createElement('link');
+        el.rel = 'stylesheet';
+        el.type = 'text/css';
+        el.href = href;
+        el.media = 'all';
+        d.getElementsByTagName('head')[0].appendChild(el);
+    }
+
+    function loadScript(src, callback) {
+        var el = document.createElement('script');
+        el.type = 'application/javascript';
+        el.src = src;
+        el.async = true;
+        el.onload = el.onreadystatechange = callback;
+        d.getElementsByTagName('head')[0].appendChild(el);
+    }
+
+    function findLastInlineScript() {
+        var scripts = d.querySelectorAll('script');
+        return scripts[scripts.length - 1];
+    }
+
+    function parseUrlQueryString(url) {
+        var str = url.split('?').length > 1 ? url.split('?')[1] : '',
+            query = str.split('#')[0],
+            keyVal = query.split('&'),
+            parsed = {};
+
+        keyVal = keyVal.map(function(s) {
+            var parts = s.split('='),
+                key = parts[0],
+                val = parts.length > 1 ? decodeURIComponent(parts[1].replace(/\+/g, ' ')) : null;
+
+            return [key, val];
+        });
+
+        for (var k in keyVal) {
+            parsed[keyVal[k][0]] = keyVal[k][1];
         }
-        document.write('<section data-youzz-widgets="'+clientId+'" data-youzz-widgets-locale="'+locale+'"  class="youzz-widgets">');
-        document.write('<div class="row"><div data-'+widget+' data-product-id="'+productId+'"></div></div>');
-        document.write('</section>');
-        //defer js loading to load only once
-        if (!document.getElementById('youzzWidgetsJs')) {
-            //TODO: assets url from gulp recipe
-            document.write('<script id="youzzWidgetsJs" src="/dist/js/widgets.js" async></script>');
+
+        return parsed;
+    }
+
+    function renderTemplate(params, sibling) {
+        var el = d.createElement('div'),
+            k;
+
+        for (k in params) {
+            el.setAttribute('data-yw-' + k, params[k]);
         }
-}());
+
+        sibling.parentNode.insertBefore(el, sibling.nextSibling);
+    }
+
+
+    var script = findLastInlineScript(),
+        params = parseUrlQueryString(script.src),
+        loader = d.YouzzWidgets && d.YouzzWidgets.Loader ? d.YouzzWidgets.Loader : {},
+        scriptLoadCount = 0,
+        callback = function() {
+            if (++scriptLoadCount === config.scripts.length) {
+                d.yw.initialize();
+            }
+        },
+        idx;
+
+        // render the widget template for the current widget instance
+        params.widget = params.widget || 'reviews';
+        renderTemplate(params, script);
+
+    // only load the CSS/JS dependencies on the first inline script inclusion
+    if (!loader.initialized) {
+        for (idx in config.stylesheets) {
+            loadStylesheet(config.stylesheets[idx]);
+        }
+
+        for (idx in config.scripts) {
+            loadScript(config.scripts[idx], callback);
+        }
+
+        loader.clientId = params.clientId || defaults.clientId;
+        loader.locale = params.locale || defaults.locale;
+        loader.initialized = true;
+        loader.missing = d.querySelectorAll('script[data-yw-script]').length;
+
+        // store the loader information on a global variable so that further inline script inclusions don't
+        // re-run the dependency loading logic
+        d.YouzzWidgets = d.YouzzWidgets || {};
+        d.YouzzWidgets.Loader = loader;
+    }
+
+    loader.missing--;
+}(document, window));

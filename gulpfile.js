@@ -6,7 +6,7 @@ var gulp = require("gulp"),
     merge = require('gulp-merge-json'),
     textTransformation = require('gulp-text-simple')
     templateCache = require('gulp-angular-templatecache')
-;
+    argv = require('yargs').argv;
 
 gulp.task('scss', function () {
     return gulp.src('src/scss/widgets.scss')
@@ -44,7 +44,7 @@ gulp.task('angular:templates', function () {
 });
 
 gulp.task("min:js", ['angular:templates', 'angular:i18n'], function () {
-    return gulp.src([
+    var src = [
 		'bower_components/jquery/dist/jquery.js',
 		'bower_components/angular/angular.js',
 		'bower_components/angular-resource/angular-resource.js',
@@ -53,13 +53,24 @@ gulp.task("min:js", ['angular:templates', 'angular:i18n'], function () {
 		'bower_components/angular-translate/angular-translate.js',
         'dist/js/templates.js',
 		'dist/js/i18n.js',
+    ],
+    env = 'src/js/environments/' + (argv.env ? argv.env : 'production') + '.js';
+
+    // TODO - split this into 2 different tasks
+    src = src.concat([
+        env,
 		'src/js/api.js',
 		'src/js/reviews.js',
 		'src/js/widgets.js'
-		])
+    ]);
+
+    gulp.src(src)
         .pipe(concat('dist/js/widgets.js'))
-    // .pipe(uglify())
 		.pipe(gulp.dest('.'));
+
+    return gulp.src([env, 'src/js/widgets.inline.js'])
+        .pipe(concat('dist/js/widgets.inline.js'))
+        .pipe(gulp.dest('.'));
 });
 
 gulp.task('fonts:font-awesome', function () {
