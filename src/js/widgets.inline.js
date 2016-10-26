@@ -56,8 +56,9 @@
         var el = d.createElement('div'),
             k;
 
+        el.setAttribute('data-youzz-widget', params.widget);
         for (k in params) {
-            el.setAttribute('data-yw-' + k, params[k]);
+            el.setAttribute('data-' + k, params[k]);
         }
 
         sibling.parentNode.insertBefore(el, sibling.nextSibling);
@@ -80,14 +81,14 @@
     // we need to determine what script inclusion we're currently dealing with (as is expected for the script to be included multiple times asynchronously)
     // and right bellow it render the HTML node that'll be picked up by angular
     loader.loadedInline = loader.loadedInline === undefined ? 0 : loader.loadedInline + 1;
-    script = d.querySelectorAll('script[data-yw-script]')[loader.loadedInline];
+    script = d.querySelectorAll('script[data-youzz-script]')[loader.loadedInline];
     params = parseUrlQueryString(script.src);
     params.widget = params.widget || 'reviews';
     renderTemplate(params, script);
 
     // only load the CSS/JS dependencies on the first inline script inclusion
     if (!loader.initialized) {
-        loader.clientId = params.clientId || defaults.clientId;
+        loader.clientId = params['client-id'] || defaults.clientId;
         loader.locale = params.locale || defaults.locale;
         loader.initialized = true;
         loader.loadedDependencies = 0;

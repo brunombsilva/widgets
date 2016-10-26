@@ -59,9 +59,10 @@ gulp.task("min:js", ['angular:templates', 'angular:i18n'], function () {
     // TODO - split this into 2 different tasks
     src = src.concat([
         env,
-		'src/js/api.js',
-		'src/js/reviews.js',
-		'src/js/widgets.js'
+		'src/js/angular/api.js',
+		'src/js/angular/reviews.js',
+		'src/js/angular/widgets.js',
+        'src/js/widgets.js'
     ]);
 
     gulp.src(src)

@@ -2,8 +2,6 @@
 	'use strict';
 
 	var module = angular.module('Youzz.Api', ['ngResource']);
-	//module.value('token', undefined);
-	//module.value('endpoint', undefined);
 
 	module.factory('Api', ['$resource', 'endpoint', 'clientId', function($resource, endpoint, clientId) {
 		return function(path, paramDefaults, actions, options) {

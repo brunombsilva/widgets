@@ -1,11 +1,7 @@
 (function($, window, document, angular) {
 	'use strict';
 
-    var yw, YouzzWidgets;
-    yw = YouzzWidgets = {
-        _selectors: {
-            container: '[data-yw-widget]'
-        },
+    var YouzzWidgets = {
         modules: {
             api: null,
             widgets: null
@@ -19,16 +15,15 @@
         initialize: function() {
             var loader = this.loader() || {},
                 config = this.config(),
-                containers = $(this._selectors.container),
+                containers = $('[data-youzz-widget]'),
                 locale = loader.locale || 'pt',
-                clientId = loader.clientId || containers.eq(0).attr('data-yw-clientId');
+                clientId = loader.clientId || containers.eq(0).attr('data-client-id');
 
             this.modules.api = angular.module('Youzz.Api');
-            this.modules.widgets = angular.module('Youzz.Widgets', ['Youzz.Widgets.Reviews', 'pascalprecht.translate', 'Youzz.i18n']);
+            this.modules.widgets = angular.module('Youzz.Widgets');
 
-            this.modules.api
-                .value('clientId', clientId)
-                .value('endpoint', config.api);
+            this.modules.api.value({clientId, clientId, endpoint: config.apiUrl});
+            this.modules.widgets.value('locale', locale);
 
             this.modules.widgets.config(['$translateProvider', 'Locales', function($translateProvider, Locales) {
                 $translateProvider.useSanitizeValueStrategy('escape');
@@ -46,10 +41,10 @@
         }
     };
 
-    document.YouzzWidgets.Instance = document.yw = yw;
+    document.YouzzWidgets.Instance = document.yw = YouzzWidgets;
 
     // if no loader is present assume that no inline script was included and initialize all the widgets
-    if (!yw.loader()) {
-        yw.initialize();
+    if (!YouzzWidgets.loader()) {
+        YouzzWidgets.initialize();
     }
 }(jQuery, window, document, angular));
