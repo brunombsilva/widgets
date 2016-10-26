@@ -64,23 +64,30 @@
     }
 
 
-    var script = findLastInlineScript(),
-        params = parseUrlQueryString(script.src),
-        loader = d.YouzzWidgets && d.YouzzWidgets.Loader ? d.YouzzWidgets.Loader : {},
-        scriptLoadCount = 0,
+    var loader = d.YouzzWidgets && d.YouzzWidgets.Loader ? d.YouzzWidgets.Loader : {},
         callback = function() {
-            if (++scriptLoadCount === config.scripts.length) {
+            loader.loadedDependencies++;
+
+            if (loader.loadedDependencies === config.scripts.length) {
                 d.yw.initialize();
             }
         },
-        idx;
+        script, params, idx;
 
-        // render the widget template for the current widget instance
-        params.widget = params.widget || 'reviews';
-        renderTemplate(params, script);
+    // render the widget template for the current widget instance
+    loader.loadedInline = loader.loadedInline === undefined ? 0 : loader.loadedInline + 1;
+    script = d.querySelectorAll('script[data-yw-script]')[loader.loadedInline];
+    params = parseUrlQueryString(script.src);
+    params.widget = params.widget || 'reviews';
+    renderTemplate(params, script);
 
     // only load the CSS/JS dependencies on the first inline script inclusion
     if (!loader.initialized) {
+        loader.clientId = params.clientId || defaults.clientId;
+        loader.locale = params.locale || defaults.locale;
+        loader.initialized = true;
+        loader.loadedDependencies = 0;
+
         for (idx in config.stylesheets) {
             loadStylesheet(config.stylesheets[idx]);
         }
@@ -89,16 +96,9 @@
             loadScript(config.scripts[idx], callback);
         }
 
-        loader.clientId = params.clientId || defaults.clientId;
-        loader.locale = params.locale || defaults.locale;
-        loader.initialized = true;
-        loader.missing = d.querySelectorAll('script[data-yw-script]').length;
-
         // store the loader information on a global variable so that further inline script inclusions don't
         // re-run the dependency loading logic
         d.YouzzWidgets = d.YouzzWidgets || {};
         d.YouzzWidgets.Loader = loader;
     }
-
-    loader.missing--;
 }(document, window));
