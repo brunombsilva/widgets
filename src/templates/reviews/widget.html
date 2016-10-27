@@ -1,6 +1,6 @@
 <div class="youzz-widgets">
-    <div data-ng-if="featureEnabled('product')" data-reviews-summary data-product-id="{{ productId }}"></div>
-    <div data-ng-if="featureEnabled('reviews') && featureEnabled('sidebar')">
+    <div data-ng-if="featureEnabled('product')" data-reviews-product data-product-id="{{ productId }}"></div>
+    <div data-ng-if="featureEnabled('list') && featureEnabled('distribution')">
         <div class="row">
             <div class="col-md-4">
                 <div data-reviews-distribution data-product-id="{{ productId }}"></div>
@@ -10,8 +10,8 @@
             </div>
         </div>
     </div>
-    <div data-ng-if="featureEnabled('reviews') ^ featureEnabled('sidebar')">
-        <div data-ng-if="featureEnabled('reviews')" data-reviews-list data-product-id="{{ productId }}">
-        <div data-ng-if="featureEnabled('sidebar')" data-reviews-distribution data-product-id="{{ productId }}"></div>
+    <div data-ng-if="featureEnabled('list') ^ featureEnabled('distribution')">
+        <div data-ng-if="featureEnabled('list')" data-reviews-list data-product-id="{{ productId }}">
+        <div data-ng-if="featureEnabled('distribution')" data-reviews-distribution data-product-id="{{ productId }}"></div>
     </div>
 </div>

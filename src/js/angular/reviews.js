@@ -32,7 +32,7 @@
         };
     }]);
 
-    module.directive('reviewsSummary', ['Product', function(Product) {
+    module.directive('reviewsProduct', ['Product', function(Product) {
         return {
             restrict: "A",
             scope: {
