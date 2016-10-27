@@ -84,11 +84,12 @@
             },
             scope: {
                 productId: '@',
-                features: '@'
+                clientId: '@'
             },
-            link: function(scope) {
+            link: function(scope, element, attrs) {
+                scope.features = angular.isUndefined(attrs.features) ? null : attrs.features.split('|');
                 scope.featureEnabled = function(feature) {
-                    return true;
+                    return !scope.features || scope.features.indexOf(feature) !== -1;
                 }
             }
         };

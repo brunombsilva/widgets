@@ -22,7 +22,7 @@
             this.modules.api = angular
                 .module('Youzz.Api')
                 .constant('clientId', clientId)
-                .constant('endponit', config.apiUrl);
+                .constant('endpoint', config.apiUrl);
 
             this.modules.widgets = angular
                 .module('Youzz.Widgets')
