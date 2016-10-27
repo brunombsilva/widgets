@@ -7,6 +7,7 @@ var gulp = require("gulp"),
     textTransformation = require('gulp-text-simple')
     templateCache = require('gulp-angular-templatecache')
     argv = require('yargs').argv,
+    cssPrefix = require('gulp-css-prefix'),
     env = argv.env || 'production';
 
 gulp.task('scss', function () {
@@ -20,6 +21,7 @@ gulp.task('scss', function () {
 gulp.task("min:css", ['scss'], function () {
     return gulp.src(['dist/css/widgets.css'])
 		.pipe(concat('dist/css/widgets.min.css'))
+        .pipe(cssPrefix('youzz-'))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
