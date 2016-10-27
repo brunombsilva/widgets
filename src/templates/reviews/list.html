@@ -1,4 +1,4 @@
-<section class="product-reviews">
+<section ng-if="reviews" class="product-reviews">
     <div class="col-md-12">
         <div class="col-md-5 col-xs-8">
             <h4>{{ 'Product Reviews' | translate }}</h4>
@@ -34,3 +34,6 @@
         <ul class="ng-hide" data-ng-show="reviews && totalItems > pageSize" data-uib-pagination data-total-items="reviews.pagination.totalItems" data-items-per-page="pageSize" data-ng-model="currentPage"></ul>
     </div>
 </section>
+<div ng-if="ajaxError">
+    <p>There was an error loading the information.</p>
+</div>

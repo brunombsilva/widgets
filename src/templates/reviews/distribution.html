@@ -1,4 +1,4 @@
-<aside class="no-gutter sidebar-rating">
+<aside ng-if="product" class="no-gutter sidebar-rating">
     <h4>{{'Distribution' | translate }}</h4>
 
     <ul class="col-md-8 no-gutter progress-bars">
@@ -13,3 +13,6 @@
         </li>
     </ul>
 </aside>
+<div ng-if="ajaxError">
+    <p>There was an error loading the information.</p>
+</div>

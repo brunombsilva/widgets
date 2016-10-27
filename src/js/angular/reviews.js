@@ -4,29 +4,36 @@
     var module = angular.module('Youzz.Widgets.Reviews', ['ngResource', 'ui.bootstrap', 'Youzz.Widgets.Templates', 'Youzz.Api']);
 
     module.factory('Product', ['Api', function(Api) {
-        return Api(
-            'products/:productId', {
-                productId: '@productId'
-            }, {
-                get: {},
-                reviews: {
-                    isArray: true,
-                    url: 'products/:productId/reviews',
-                }
-            }
-        );
+        return function (options) {
+            return Api(
+                "products/:productId",
+                {productId: '@productId'},
+                {
+                    get: {},
+                    reviews: {
+                        isArray: true,
+                        url: 'products/:productId/reviews',
+                    }
+                },
+                options
+            );
+        };
     }]);
 
     module.directive('reviewsDistribution', ['Product', function(Product) {
         return {
             restrict: "A",
             scope: {
-                productId: '@'
+                productId: '@',
+                clientId: '@'
             },
             link: function($scope) {
-                $scope.product = Product.get({
-                    productId: $scope.productId
-                });
+                var params = {productId: $scope.productId},
+                    opts = {clientId: $scope.clientId},
+                    success = function (p) { $scope.product = p; },
+                    error = function() { $scope.ajaxError = true; };
+
+                Product(opts).get(params, success, error);
             },
             templateUrl: 'reviews/distribution.html'
         };
@@ -36,14 +43,18 @@
         return {
             restrict: "A",
             scope: {
-                productId: '@'
+                productId: '@',
+                clientId: '@'
             },
             link: function($scope) {
-                $scope.product = Product.get({
-                    productId: $scope.productId
-                });
+                var params = {productId: $scope.productId},
+                    opts = {clientId: $scope.clientId},
+                    success = function (p) { $scope.product = p; },
+                    error = function() { $scope.ajaxError = true; };
+
+                Product(opts).get(params, success, error);
             },
-            templateUrl: 'reviews/summary.html'
+            templateUrl: 'reviews/product.html'
         };
     }]);
 
@@ -52,11 +63,14 @@
             restrict: "A",
             scope: {
                 productId: '@',
-                pageSize: '@'
+                pageSize: '@',
+                clientId: '@'
             },
             link: function($scope) {
                 $scope.sortField = 'DateCreated';
                 $scope.currentPage = 1;
+                $scope.reviews = null;
+
                 if (angular.isUndefined($scope.pageSize)) {
                     $scope.pageSize = 25;
                 }
@@ -66,9 +80,12 @@
                         offset: ($scope.currentPage - 1) * $scope.pageSize,
                         limit: $scope.pageSize,
                         sortField: $scope.sortField
-                    };
+                    },
+                    opts = {clientId: $scope.clientId},
+                    success = function(r) { $scope.reviews = r; },
+                    error = function() { $scope.ajaxError = true; };
 
-                    $scope.reviews = Product.reviews(params);
+                    Product(opts).reviews(params, success, error);
                 });
             },
             templateUrl: 'reviews/list.html'
