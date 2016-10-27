@@ -74,6 +74,7 @@
                 if (angular.isUndefined($scope.pageSize)) {
                     $scope.pageSize = 25;
                 }
+
                 $scope.$watchGroup(['sortField', 'currentPage'], function() {
                     var params = {
                         productId: $scope.productId,
