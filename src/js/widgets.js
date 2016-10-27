@@ -19,22 +19,14 @@
                 locale = loader.locale || 'pt',
                 clientId = loader.clientId || containers.eq(0).attr('data-client-id');
 
-            this.modules.api = angular.module('Youzz.Api');
-            this.modules.widgets = angular.module('Youzz.Widgets');
+            this.modules.api = angular
+                .module('Youzz.Api')
+                .constant('clientId', clientId)
+                .constant('endponit', config.apiUrl);
 
-            this.modules.api.value({clientId, clientId, endpoint: config.apiUrl});
-            this.modules.widgets.value('locale', locale);
-
-            // TODO - Move this to the Youzz.Widgets module
-            this.modules.widgets.config(['$translateProvider', 'Locales', function($translateProvider, Locales) {
-                $translateProvider.useSanitizeValueStrategy('escape');
-
-                angular.forEach(Locales, function(value, key) {
-                    $translateProvider.translations(key, value);
-                });
-
-                $translateProvider.preferredLanguage(locale);
-            }]);
+            this.modules.widgets = angular
+                .module('Youzz.Widgets')
+                .constant('defaultLocale', locale);
 
             angular.forEach(containers, function(c) {
                 angular.bootstrap(c, ['Youzz.Widgets']);

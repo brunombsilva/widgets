@@ -56,7 +56,8 @@
         var el = d.createElement('div'),
             k;
 
-        el.setAttribute('data-youzz-widget', params.widget);
+        el.setAttribute('data-youzz-widget', true);
+        el.setAttribute('data-youzz-widget-' + params.widget, true);
         for (k in params) {
             el.setAttribute('data-' + k, params[k]);
         }

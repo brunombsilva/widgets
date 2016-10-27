@@ -74,4 +74,23 @@
             templateUrl: 'reviews/list.html'
         };
     }]);
+
+
+    module.directive('youzzWidgetReviews', function() {
+        return {
+            restrict: 'A',
+            templateUrl: function() {
+                return 'reviews/widget.html';
+            },
+            scope: {
+                productId: '@',
+                features: '@'
+            },
+            link: function(scope) {
+                scope.featureEnabled = function(feature) {
+                    return true;
+                }
+            }
+        };
+    });
 }(jQuery, window, angular));
