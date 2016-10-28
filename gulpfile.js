@@ -8,6 +8,7 @@ var gulp = require("gulp"),
     templateCache = require('gulp-angular-templatecache')
     argv = require('yargs').argv,
     cssPrefix = require('gulp-css-prefix'),
+    uglify = require('gulp-uglify'),
     env = argv.env || 'production';
 
 gulp.task('scss', function () {
@@ -65,7 +66,10 @@ gulp.task('min:js:widgets', function() {
 
     return gulp.src(src)
         .pipe(concat('dist/js/widgets.js'))
-		.pipe(gulp.dest('.'));
+		.pipe(gulp.dest('widgets.js'))
+        .pipe(uglify())
+        .pipe(concat('dist/js/widgets.min.js'))
+        .pipe(gulp.dest('.'));
 });
 
 gulp.task('min:js:widgets-inline', function() {
