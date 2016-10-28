@@ -21,7 +21,6 @@ gulp.task('scss', function () {
 gulp.task("min:css", ['scss'], function () {
     return gulp.src(['dist/css/widgets.css'])
 		.pipe(concat('dist/css/widgets.min.css'))
-        .pipe(cssPrefix('youzz-'))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
