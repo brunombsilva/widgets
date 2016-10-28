@@ -1,4 +1,4 @@
-(function($, window, document, angular) {
+(function(window, document, angular) {
 	'use strict';
 
     var YouzzWidgets = {
@@ -15,7 +15,7 @@
         initialize: function() {
             var loader = this.loader() || {},
                 config = this.config(),
-                containers = $('[data-youzz-widget]'),
+                containers = document.querySelectorAll('[data-youzz-widget]'),
                 locale = loader.locale || 'pt',
                 clientId = loader.clientId || containers.eq(0).attr('data-client-id');
 
@@ -40,4 +40,4 @@
     if (!YouzzWidgets.loader()) {
         YouzzWidgets.initialize();
     }
-}(jQuery, window, document, angular));
+}(window, document, angular));

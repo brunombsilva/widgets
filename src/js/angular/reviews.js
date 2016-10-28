@@ -1,4 +1,4 @@
-(function($, window, angular) {
+(function(window, angular) {
     'use strict';
 
     var module = angular.module('Youzz.Widgets.Reviews', ['ngResource', 'ui.bootstrap', 'Youzz.Widgets.Templates', 'Youzz.Api']);
@@ -94,11 +94,11 @@
     }]);
 
 
-    module.directive('youzzWidgetReviews', function() {
+    module.directive('youzzWidgetReviewsFull', function() {
         return {
             restrict: 'A',
             templateUrl: function() {
-                return 'reviews/widget.html';
+                return 'reviews/full.html';
             },
             scope: {
                 productId: '@',
@@ -112,4 +112,4 @@
             }
         };
     });
-}(jQuery, window, angular));
+}(window, angular));

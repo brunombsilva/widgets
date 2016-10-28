@@ -1,4 +1,4 @@
-(function($, window, angular) {
+(function(window, angular) {
 	'use strict';
 
 	var module = angular.module('Youzz.Api', ['ngResource']);
@@ -55,4 +55,4 @@
 			);
 		};
 	}]);
-}(jQuery, window, angular));
+}( window, angular));
