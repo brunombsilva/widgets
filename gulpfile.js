@@ -53,9 +53,7 @@ gulp.task('min:js:widgets', function() {
     var src = [
 		'bower_components/angular/angular.js',
 		'bower_components/angular-resource/angular-resource.js',
-        'bower_components/angular-bootstrap/dist/ui-bootstrap-custom-2.1.1.js',
-        'bower_components/angular-bootstrap/dist/ui-bootstrap-custom-tpls-2.1.1.js',
-		'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        'bower_components/angular-bootstrap/dist/ui-bootstrap-custom-2.2.0.js',
 		'bower_components/angular-translate/angular-translate.js',
         'dist/js/templates.js',
 		'dist/js/i18n.js',
