@@ -9,6 +9,7 @@ var gulp = require("gulp"),
     argv = require('yargs').argv,
     cssPrefix = require('gulp-css-prefix'),
     uglify = require('gulp-uglify'),
+    shell = require('gulp-shell'),
     env = argv.env || 'production';
 
 gulp.task('scss', function () {
@@ -52,7 +53,8 @@ gulp.task('min:js:widgets', function() {
     var src = [
 		'bower_components/angular/angular.js',
 		'bower_components/angular-resource/angular-resource.js',
-        'bower_components/angular-bootstrap/ui-bootstrap.js',
+        'bower_components/angular-bootstrap/dist/ui-bootstrap-custom-2.1.1.js',
+        'bower_components/angular-bootstrap/dist/ui-bootstrap-custom-tpls-2.1.1.js',
 		'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
 		'bower_components/angular-translate/angular-translate.js',
         'dist/js/templates.js',
@@ -78,7 +80,13 @@ gulp.task('min:js:widgets-inline', function() {
         .pipe(gulp.dest('.'));
 });
 
-gulp.task("min:js", ['angular:templates', 'angular:i18n', 'min:js:widgets']);
+// TODO - Remove the version information from the generated js files
+gulp.task('angular:bootstrap', shell.task([
+    'npm install',
+    'grunt version:: build:pagination'
+], {quiet: true, cwd: 'bower_components/angular-bootstrap'}));
+
+gulp.task("min:js", ['angular:templates', 'angular:i18n', 'angular:bootstrap', 'min:js:widgets', 'min:js:widgets-inline']);
 
 gulp.task('fonts:font-awesome', function () {
     return gulp.src(['bower_components/font-awesome/fonts/*'])
