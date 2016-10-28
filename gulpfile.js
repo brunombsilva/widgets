@@ -37,6 +37,7 @@ gulp.task('angular:i18n', ['angular:i18n:locales'], function() {
             return "angular.module('Youzz.i18n', []).constant('Locales', :locales:);".replace(/:locales:/,text);
         })())
         .pipe(concat('dist/js/i18n.js'))
+        .pipe(uglify())
         .pipe(gulp.dest('.'));
 });
 
@@ -49,7 +50,6 @@ gulp.task('angular:templates', function () {
 
 gulp.task('min:js:widgets', function() {
     var src = [
-		'bower_components/jquery/dist/jquery.js',
 		'bower_components/angular/angular.js',
 		'bower_components/angular-resource/angular-resource.js',
         'bower_components/angular-bootstrap/ui-bootstrap.js',
@@ -66,7 +66,7 @@ gulp.task('min:js:widgets', function() {
 
     return gulp.src(src)
         .pipe(concat('dist/js/widgets.js'))
-		.pipe(gulp.dest('widgets.js'))
+		.pipe(gulp.dest('.'))
         .pipe(uglify())
         .pipe(concat('dist/js/widgets.min.js'))
         .pipe(gulp.dest('.'));
