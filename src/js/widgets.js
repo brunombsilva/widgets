@@ -13,11 +13,20 @@
             return document.YouzzWidgets.Config;
         },
         initialize: function() {
-            var loader = this.loader() || {},
+            var loader = this.loader() || null,
                 config = this.config(),
                 containers = document.querySelectorAll('[data-youzz-widget]'),
-                locale = loader.locale || 'pt',
-                clientId = loader.clientId || containers.eq(0).attr('data-client-id');
+                container = containers.length ? containers[0] : null,
+                locale = 'pt',
+                clientId;
+
+            if (loader) {
+                locale = loader.locale || locale;
+                clientId = loader.clientId;
+            } else if (container) {
+                locale = container.getAttribute('data-locale') || locale;
+                clientId = container.getAttribute('data-client-id');
+            }
 
             this.modules.api = angular
                 .module('Youzz.Api')

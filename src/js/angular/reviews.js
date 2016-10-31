@@ -84,7 +84,8 @@
                     currentPage: 1,
                     pageSize: 25,
                     maxSize: 10,
-                    loading: true
+                    loading: true,
+                    firstLoad: true
                 };
 
                 $scope.$watchGroup(['list.sortField', 'list.currentPage'], function() {
@@ -99,8 +100,13 @@
                     loading = function() { $scope.list.loading = false; },
                     success = function(r) { 
                         $scope.reviews = r;
-                        $location.hash('reviews-product-' + $scope.productId);
-                        $anchorScroll();
+
+                        if (!$scope.list.firstLoad) {
+                            $location.hash('reviews-product-' + $scope.productId);
+                            $anchorScroll();
+                        }
+
+                        $scope.list.firstLoad = false;
                     };
 
                     Product(opts)
