@@ -81,7 +81,7 @@ gulp.task('min:js:widgets-inline', function() {
 // TODO - Remove the version information from the generated js files
 gulp.task('angular:bootstrap', shell.task([
     'npm install',
-    'grunt version:: build:pagination'
+    'grunt version:: build:pagination:rating'
 ], {quiet: true, cwd: 'bower_components/angular-bootstrap'}));
 
 gulp.task("min:js", ['angular:templates', 'angular:i18n', 'angular:bootstrap', 'min:js:widgets', 'min:js:widgets-inline']);

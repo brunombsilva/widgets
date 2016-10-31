@@ -63,24 +63,23 @@
             restrict: "A",
             scope: {
                 productId: '@',
-                pageSize: '@',
                 clientId: '@'
             },
             link: function($scope) {
-                $scope.sortField = 'DateCreated';
-                $scope.currentPage = 1;
                 $scope.reviews = null;
+                $scope.list = {
+                    sortField: 'DateCreated',
+                    currentPage: 1,
+                    pageSize: 25,
+                    maxSize: 10
+                };
 
-                if (angular.isUndefined($scope.pageSize)) {
-                    $scope.pageSize = 25;
-                }
-
-                $scope.$watchGroup(['sortField', 'currentPage'], function() {
+                $scope.$watchGroup(['list.sortField', 'list.currentPage'], function() {
                     var params = {
                         productId: $scope.productId,
-                        offset: ($scope.currentPage - 1) * $scope.pageSize,
-                        limit: $scope.pageSize,
-                        sortField: $scope.sortField
+                        offset: ($scope.list.currentPage - 1) * $scope.list.pageSize,
+                        limit: $scope.list.pageSize,
+                        sortField: $scope.list.sortField
                     },
                     opts = {clientId: $scope.clientId},
                     success = function(r) { $scope.reviews = r; },

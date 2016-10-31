@@ -1,18 +1,49 @@
-/* Full width container
---------------------------------------------------------------- */
-.reviews-full {
-    @include container-fixed();
-}
-
-
 /* Single Review
 --------------------------------------------------------------- */
 .product-reviews {
+    .review-filters {
+        @include make-row();
+
+        .filters {
+            @include make-md-column(3);
+            @include make-md-column-offset(9);
+            text-align: right;
+            margin-bottom: 20px;
+        }
+    }
+
     .review {
+        @include make-row();
         border-bottom: 1px solid darken($grey, 10%);
-        padding: 40px;
-        @media(min-width: $screen-md-min) {
-            padding: 40px 0;
+        padding: 40px 0;
+
+        &:first-child {
+            padding-top: 0;
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .review-image {
+            @include make-md-column(2);
+            @include make-xs-column(12);
+
+            &> div {
+                background-size: cover;
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .review-content {
+            @include make-md-column(9);
+            @include make-md-column-offset(1);
+            @include make-xs-column(12);
         }
 
         .review-text {
@@ -28,18 +59,6 @@
                 color: $youzzYellow;
                 display: inline-block;
                 font-size: 14px;
-            }
-        }
-
-        .review-image {
-            img {
-                max-width: 150px;
-                max-height: 150px;
-                margin-bottom: 30px;
-                @media(min-width: $screen-md-min) {
-                    margin-bottom: 0;
-                    max-width: 128px;
-                }
             }
         }
 
@@ -137,6 +156,7 @@ ul.progress-bars {
     li {
         display: flex;
         align-items: center;
+        line-height: 30px;
 
         .star-order {
             width: 30px;
@@ -172,6 +192,7 @@ ul.progress-bars {
         }
 
         .star-count {
+            font-size: 85%;
             margin-left: 10px;
             width: 20px;
         }
@@ -223,10 +244,6 @@ ul.progress-bars {
             font-weight: bold;
         }
     }
-}
-
-.review-distribution {
-    list-style-type: none;
 }
 
 .review {
