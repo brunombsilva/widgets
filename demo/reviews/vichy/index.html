@@ -2528,36 +2528,7 @@
                         </header>
                         <div class="toggle-content">
                             <div>
-                                <section data-youzz-widgets class="youzz-widgets">
-                                    <div class="row">
-                                        <div class="col-md-3" data-reviews-distribution data-product-id="4"></div>
-                                        <div class="col-md-9" data-reviews-list data-product-id="4" data-page-size="10"></div>
-                                    </div>
-                                </section>
-                                <script>
-                                    window.Youzz = window.Youzz || {};
-                                    window.Youzz.Widgets = {
-                                        locale: 'pt',
-                                        api: 'https://api.youzz.net/v1/',
-                                        clientId: 'Widget.Vichy.Demo'
-                                    };
-
-                                    (function() {
-                                        var scriptEl = document.createElement('script');
-                                        scriptEl.type = 'text/javascript';
-                                        scriptEl.async = true;
-                                        scriptEl.src = '/dist/js/widgets.js';
-
-                                        var cssEl = document.createElement('link');
-                                        cssEl.href = '/dist/css/widgets.min.css';
-                                        cssEl.type = 'text/css';
-                                        cssEl.rel  = 'stylesheet';
-
-                                        var head = document.getElementsByTagName('head')[0];
-                                        head.appendChild(scriptEl);
-                                        head.appendChild(cssEl);
-                                     })();
-                                </script>
+                                <script data-youzz-script src="/dist/js/widgets.inline.js?client-id=Widget.Vichy.Demo&locale=pt&widget=reviews-full&product-id=4" async></script>
                                 <p class="ctn_bt on-top"><a class="sprite-icon b_filet" onclick="addProductCommentVC2015(this, 20897)"><span>Dar a <br />sua opinião</span></a>
                                 </p>
                             </div>

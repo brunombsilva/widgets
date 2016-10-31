@@ -1,22 +1,24 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<link href="/dist/css/widgets.min.css" rel="stylesheet" />
+		<link href="/dist/css/widgets.css" rel="stylesheet" />
 	</head>
 	<body>
-		<section data-youzz-widgets="Youzz.Widgets.Sample" data-youzz-widgets-locale="pt"  class="youzz-widgets">
+        <section data-youzz-widget data-locale="pt" class="youzz-widgets">
 			<div class="container">
-				<div class="row"><div data-reviews-summary data-product-id="3"></div></div>
-				<div class="row">
-					<div class="col-md-3">
-						<div data-reviews-distribution data-product-id="3"></div>
-					</div>
-					<div class="col-md-9">
-						<div data-reviews-list data-product-id="3" data-page-size="10"></div>
-					</div>
-				</div>
+                <div class="row">
+                    <div data-reviews-product data-client-id="Widget.Youzz.Demo" data-product-id="3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div data-reviews-distribution data-client-id="Widget.Youzz.Demo" data-product-id="3"></div>
+                    </div>
+                    <div class="col-md-9">
+                        <div data-reviews-list data-client-id="Widget.Youzz.Demo" data-product-id="3"></div>
+                    </div>
+                </div>
 			</div>	
-		</section>
+        </section>
 		<script src="/dist/js/widgets.js"></script>
 	</body>
 </html>

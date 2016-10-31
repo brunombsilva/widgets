@@ -2,23 +2,33 @@
 // Headings
 // -------------------------
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family: $font-family-serif;
-  text-transform: uppercase;
-  font-weight: bold;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: $font-family-serif;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 
 p {
-  font-family: $font-family-sans-serif;
+    font-family: $font-family-sans-serif;
 }
 
 h1 {
     font-weight: 900;
     font-size: 32px;
-    font-family: $bodyFont;
-    padding: 30px 0px;
+    font-family: $body-font;
+    padding: 30px 0;
     line-height: 32px;
 
     span {
@@ -36,8 +46,11 @@ h4 {
     margin-bottom: 40px;
 }
 
-button, p, a, span {
-    &:focus{
+button,
+p,
+a,
+span {
+    &:focus {
         outline: none;
     }
 }

@@ -1,15 +1,46 @@
-<aside class="no-gutter sidebar-rating">
-    <h4>{{'Distribution' | translate }}</h4>
+<div data-ng-show="loading" class="loading">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">{{ 'Loading' | translate }}...</span>
+</div>
+<div ng-show="ajaxError" class="alert alert-danger">
+    <p>{{ 'There was an error loading the information.' | translate }}</p>
+</div>
+<aside ng-if="product" class="sidebar-rating">
+    <div class="summary">
+        <div class="star-rating" aria-hidden="true">
+            <ul>
+                <li data-ng-repeat="i in [1,2,3,4,5]">
+                <i data-ng-show="product.reviewSummary.averageRating >= i" class="filled"></i>
+                <i data-ng-show="product.reviewSummary.averageRating > i-1 && product.reviewSummary.averageRating < i"class="half"></i>
+                <i data-ng-show="product.reviewSummary.averageRating <= i-1" class=""></i>
+                </li>
+            </ul>
+        </div>
+        <div class="average">
+            <span>{{ product.reviewSummary.averageRating | number: 1 }}</span>
+            {{ 'of' | translate }}
+            <span>{{ product.reviewSummary.totalReviews }}</span>
+            {{ 'Reviews' | translate }}
+        </div>
+    </div>
 
-    <ul class="col-md-8 no-gutter progress-bars">
-        <li data-ng-repeat="(value,frequency) in product.reviewSummary.ratingFrequencyDistribution">
-            <p class="star-order">
-                {{value}}
-            </p>
-            <div class="progress">
-                <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{frequency}}" aria-valuemin="0" aria-valuemax="{{product.reviewSummary.totalReviews}}" style="width:{{ frequency/product.reviewSummary.totalReviews * 100 | number:0}}%">
+    <div class="distribution">
+        <ul class="progress-bars">
+            <li data-ng-repeat="(value,frequency) in product.reviewSummary.ratingFrequencyDistribution">
+                <div class="star-order">
+                    {{value}}
+                    <i class="fa fa-star"></i>
                 </div>
-            </div>
-        </li>
-    </ul>
+                <div class="star-progress">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{frequency}}" aria-valuemin="0" aria-valuemax="{{product.reviewSummary.totalReviews}}" style="width:{{ frequency/product.reviewSummary.totalReviews * 100 | number:0}}%">
+                        </div>
+                    </div>
+                </div>
+                <div class="star-count">
+                    ({{ frequency }})
+                </div>
+            </li>
+        </ul>
+    </div>
 </aside>

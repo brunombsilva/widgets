@@ -10,6 +10,8 @@
     "First": "First",
     "Last": "Last",
     "Previous": "Previous",
-    "Next": "Next"
+    "Next": "Next",
+    "Loading": "Loading",
+    "There was an error loading the information.": "There was an error loading the information."
   }
 }

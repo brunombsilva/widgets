@@ -6,7 +6,13 @@ var gulp = require("gulp"),
     merge = require('gulp-merge-json'),
     textTransformation = require('gulp-text-simple')
     templateCache = require('gulp-angular-templatecache')
-;
+    argv = require('yargs').argv,
+    cssPrefix = require('gulp-css-prefix'),
+    uglify = require('gulp-uglify'),
+    jshint = require('gulp-jshint'),
+    sassLint = require('gulp-sass-lint'),
+    exec = require('child_process').exec,
+    env = argv.env || 'production';
 
 gulp.task('scss', function () {
     return gulp.src('src/scss/widgets.scss')
@@ -34,6 +40,7 @@ gulp.task('angular:i18n', ['angular:i18n:locales'], function() {
             return "angular.module('Youzz.i18n', []).constant('Locales', :locales:);".replace(/:locales:/,text);
         })())
         .pipe(concat('dist/js/i18n.js'))
+        .pipe(uglify())
         .pipe(gulp.dest('.'));
 });
 
@@ -43,24 +50,47 @@ gulp.task('angular:templates', function () {
     .pipe(gulp.dest('dist/js/'));
 });
 
-gulp.task("min:js", ['angular:templates', 'angular:i18n'], function () {
-    return gulp.src([
-		'bower_components/jquery/dist/jquery.js',
+
+gulp.task('min:js:widgets', function() {
+    var src = [
 		'bower_components/angular/angular.js',
 		'bower_components/angular-resource/angular-resource.js',
-        'bower_components/angular-bootstrap/ui-bootstrap.js',
-		'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        'bower_components/angular-bootstrap/dist/ui-bootstrap-custom-2.2.0.js',
 		'bower_components/angular-translate/angular-translate.js',
+        'bower_components/angular-lazy-img/release/angular-lazy-img.js',
         'dist/js/templates.js',
 		'dist/js/i18n.js',
-		'src/js/api.js',
-		'src/js/reviews.js',
-		'src/js/widgets.js'
-		])
+        'src/js/environments/' + env + '.js',
+		'src/js/angular/api.js',
+		'src/js/angular/reviews.js',
+		'src/js/angular/widgets.js',
+        'src/js/widgets.js'
+    ];
+
+    return gulp.src(src)
         .pipe(concat('dist/js/widgets.js'))
-    // .pipe(uglify())
-		.pipe(gulp.dest('.'));
+		.pipe(gulp.dest('.'))
+        .pipe(uglify())
+        .pipe(concat('dist/js/widgets.min.js'))
+        .pipe(gulp.dest('.'));
 });
+
+gulp.task('min:js:widgets-inline', function() {
+    return gulp.src(['src/js/environments/' + env + '.js', 'src/js/widgets.inline.js'])
+        .pipe(concat('dist/js/widgets.inline.js'))
+        .pipe(gulp.dest('.'));
+});
+
+// TODO - Remove the version information from the generated js files
+gulp.task('angular:bootstrap', function(cb) {
+    exec('cd bower_components/angular-bootstrap && npm install && grunt version:: build:pagination:rating', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task("min:js", ['angular:templates', 'angular:i18n', 'angular:bootstrap', 'min:js:widgets', 'min:js:widgets-inline']);
 
 gulp.task('fonts:font-awesome', function () {
     return gulp.src(['bower_components/font-awesome/fonts/*'])
@@ -71,6 +101,30 @@ gulp.task('fonts:bootstrap', function () {
     return gulp.src(['bower_components/bootstrap-sass/assets/fonts/bootstrap/*'])
             .pipe(gulp.dest('dist/fonts/bootstrap'));
 });
+
+gulp.task('lint:js', function() {
+    return gulp.src(["src/**/*.js"])
+      .pipe(jshint())
+      .pipe(jshint.reporter('jshint-stylish'))
+      .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('lint:scss', function() {
+    return gulp.src(["src/**/*.scss"])
+      .pipe(sassLint({
+          options: {
+              formatter: 'unix'
+          },
+          rules: {
+              'indentation': [1, { size: 4 }],
+              'property-sort-order': [0, { order: 'concentric' }]
+          }
+      }))
+        .pipe(sassLint.format())
+        .pipe(sassLint.failOnError());
+});
+
+gulp.task('lint', ['lint:js', 'lint:scss']);
 
 gulp.task('build', ['min:css', 'min:js', 'fonts:font-awesome', 'fonts:bootstrap']);
 

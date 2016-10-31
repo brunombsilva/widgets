@@ -1,18 +1,19 @@
-
-@import "variables";
-@import "bower_components/font-awesome/scss/font-awesome";
+@import 'bower_components/font-awesome/scss/font-awesome';
 
 .youzz-widgets {
-    @import "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800";
-    @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+    @import 'components';
+    @import 'variables';
+    @import 'reset';
+    @import 'typography';
+    @import 'reviews';
+
+    font-family: 'Open Sans';
 
     .fa {
-        font-family: "FontAwesome";
+        font-family: 'FontAwesome';
     }
 
-    font-family: "Open Sans";
-
-    @import "reset";
-    @import "typography";
-    @import "reviews";
+    .loading {
+        text-align: center;
+    }
 }
