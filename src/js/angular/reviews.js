@@ -113,7 +113,7 @@
                         .reviews(params)
                         .$promise
                         .then(success, error)
-                        .finally(loading)
+                        .finally(loading);
                 });
             },
             templateUrl: 'reviews/list.html'
@@ -135,7 +135,7 @@
                 scope.features = angular.isUndefined(attrs.features) ? null : attrs.features.split('|');
                 scope.featureEnabled = function(feature) {
                     return !scope.features || scope.features.indexOf(feature) !== -1;
-                }
+                };
             }
         };
     });

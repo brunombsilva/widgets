@@ -15,8 +15,8 @@
         };
 
 		return function(path, paramDefaults, actions, options) {
-			var actions = angular.extend({}, actions),
-                options = angular.extend({clientId: clientId}, clean(options));
+			options = angular.extend({clientId: clientId}, clean(options));
+            actions = angular.extend({}, actions);
 
 			angular.forEach(actions, function(value, key) {
 				if (angular.isDefined(value.url)) {
@@ -41,7 +41,7 @@
 						var obj = angular.fromJson(data);
 						headers().pagination = obj.pagination;
 						return obj.items;
-					}
+					};
 				}
 			});
 

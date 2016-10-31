@@ -10,6 +10,8 @@ var gulp = require("gulp"),
     cssPrefix = require('gulp-css-prefix'),
     uglify = require('gulp-uglify'),
     shell = require('gulp-shell'),
+    jshint = require('gulp-jshint'),
+    sassLint = require('gulp-sass-lint'),
     env = argv.env || 'production';
 
 gulp.task('scss', function () {
@@ -96,6 +98,30 @@ gulp.task('fonts:bootstrap', function () {
     return gulp.src(['bower_components/bootstrap-sass/assets/fonts/bootstrap/*'])
             .pipe(gulp.dest('dist/fonts/bootstrap'));
 });
+
+gulp.task('lint:js', function() {
+    return gulp.src(["src/**/*.js"])
+      .pipe(jshint())
+      .pipe(jshint.reporter('jshint-stylish'))
+      .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('lint:scss', function() {
+    return gulp.src(["src/**/*.scss"])
+      .pipe(sassLint({
+          options: {
+              formatter: 'unix'
+          },
+          rules: {
+              'indentation': [1, { size: 4 }],
+              'property-sort-order': [0, { order: 'concentric' }]
+          }
+      }))
+        .pipe(sassLint.format())
+        .pipe(sassLint.failOnError());
+});
+
+gulp.task('lint', ['lint:js', 'lint:scss']);
 
 gulp.task('build', ['min:css', 'min:js', 'fonts:font-awesome', 'fonts:bootstrap']);
 

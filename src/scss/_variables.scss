@@ -1,35 +1,25 @@
+// Typography
+$font-family-sans-serif:  'Open Sans';
+$font-family-serif:       'Source Sans Pro', sans-serif;
+$body-font: $font-family-sans-serif;
+$heading-font: $font-family-serif;
 
-/* Headings
---------------------------------------------------------------- */
+// Colors
+$youzz-pink: #ec1d52;
+$youzz-green: #29af4c;
+$youzz-yellow: #f8a62b;
+$youzz-blue: #23abe2;
 
-//== Typography
-//
-//## Font, line-height, and color for body text, headings, and more.
-
-$font-family-sans-serif:  "Open Sans";
-$font-family-serif:       "Source Sans Pro", sans-serif;
-
-$bodyFont    : $font-family-sans-serif;
-$headingFont : $font-family-serif;
-
-// Colours
-// -------------------------
-
-
-$youzzPink     : #ec1d52;
-$youzzGreen    : #29af4c;
-$youzzYellow   : #f8a62b;
-$youzzBlue     : #23abe2;
-
-$blueDark      : #0d2635;
-$white 		   : #FFF; 
-$black 		   : #000; 
-$grey 		   : #F9F9F9; 
+$blue-dark: #0d2635;
+$white: #fff;
+$black: #000;
+$grey: #f9f9f9;
+$transparent-black: rgba(0, 0, 0, .15);
 
 $brand-success:         #29af4c !default;
 $brand-info:            #5bc0de !default;
-$brand-warning:         $youzzYellow !default;
+$brand-warning:         $youzz-yellow !default;
 
-$modal-backdrop-opacity: 0.7;
+$modal-backdrop-opacity: .7;
 $campaign-nav-bg-color: $grey;
-$reviews-product-bg-color: #F2F2F2;
+$reviews-product-bg-color: #f2f2f2;

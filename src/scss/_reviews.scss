@@ -1,8 +1,8 @@
-/* Single Review
---------------------------------------------------------------- */
+// Single Review
+// ------------------------------------------------
 .product-reviews {
     .review-filters {
-        @include make-row();
+        @include make-row;
 
         .filters {
             @include make-md-column(3);
@@ -13,7 +13,7 @@
     }
 
     .review {
-        @include make-row();
+        @include make-row;
         border-bottom: 1px solid darken($grey, 10%);
         padding: 40px 0;
 
@@ -22,7 +22,7 @@
         }
 
         &:last-child {
-            border-bottom: none;
+            border-bottom: 0;
         }
 
         .review-image {
@@ -33,7 +33,7 @@
 
             &> div {
                 background-size: cover;
-                background-color: #eaeaea;
+                background-color: $grey;
                 width: 150px;
                 height: 150px;
                 border-radius: 50%;
@@ -59,7 +59,7 @@
             font-weight: 700;
 
             span {
-                color: $youzzYellow;
+                color: $youzz-yellow;
                 display: inline-block;
                 font-size: 14px;
             }
@@ -70,7 +70,6 @@
             padding-left: 0;
 
             li {
-                display: block;
                 list-style: none;
                 margin-right: 10px;
                 font-size: 10px;
@@ -83,23 +82,23 @@
                 }
 
                 &:nth-child(1) {
-                    color: $youzzPink;
+                    color: $youzz-pink;
                 }
 
                 &:nth-child(2) {
-                    color: $youzzGreen;
+                    color: $youzz-green;
                 }
 
                 &:nth-child(3) {
-                    color: $youzzBlue;
+                    color: $youzz-blue;
                 }
             }
         }
     }
 }
 
-/* Aside
---------------------------------------------------------------- */
+// Aside
+// ---------------------------------------------------------------
 aside {
     margin-bottom: 40px;
     padding: 0;
@@ -114,8 +113,8 @@ aside {
     }
 }
 
-/* Star rating
---------------------------------------------------------------- */
+// Star rating
+// ---------------------------------------------------------------
 .star-rating {
     font-size: 32px;
 
@@ -129,28 +128,30 @@ aside {
         }
     }
 
-    i.filled:before {
-        @include fa-icon;
-        content: $fa-var-star;
-        color: $youzzYellow;
-    }
+    i {
+        &::before {
+            @include fa-icon;
+            content: $fa-var-star-o;
+            color: $youzz-yellow;
+        }
 
-    i.half:before {
-        @include fa-icon;
-        content: $fa-var-star-half-o;
-        color: $youzzYellow;
-    }
+        &.half {
+            &::before {
+                content: $fa-var-star-half-o;
+            }
+        }
 
-    i:before {
-        @include fa-icon;
-        content: $fa-var-star-o;
-        color: $youzzYellow;
+        &.filled {
+            &::before {
+                content: $fa-var-star;
+            }
+        }
     }
 }
 
-/* Progress Bars
---------------------------------------------------------------- */
-ul.progress-bars {
+// Progress Bars
+// ---------------------------------------------------------------
+.progress-bars {
     list-style-type: none;
     padding: 0;
 
@@ -161,35 +162,35 @@ ul.progress-bars {
 
         .star-order {
             width: 30px;
+        }
 
-            .fa-star {
-                color: $youzzYellow;
-            }
+        .fa-star {
+            color: $youzz-yellow;
         }
 
         .star-progress {
             width: calc(100% - 60px);
+        }
 
-            .progress {
-                margin-bottom: 0;
-                margin-left: 0;
-                border-radius: 20px;
-                height: 10px;
-            }
+        .progress {
+            margin-bottom: 0;
+            margin-left: 0;
+            border-radius: 20px;
+            height: 10px;
+        }
 
-            .progress-bar {
-                border-radius: 20px;
-                height: 10px;
-                font-size: 12px;
-                line-height: 20px;
-                color: #fff;
-                box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
-                transition: width .6s ease;
-            }
+        .progress-bar {
+            border-radius: 20px;
+            height: 10px;
+            font-size: 12px;
+            line-height: 20px;
+            color: $white;
+            box-shadow: inset 0 -1px 0 $transparent-black;
+            transition: width .6s ease;
+        }
 
-            .progress-bar-warning {
-                background-color: $youzzYellow;
-            }
+        .progress-bar-warning {
+            background-color: $youzz-yellow;
         }
 
         .star-count {
@@ -200,14 +201,14 @@ ul.progress-bars {
     }
 }
 
-/* Product Spotlight
---------------------------------------------------------------- */
+// Product Spotlight
+// ---------------------------------------------------------------
 .product-spotlight {
-    font-family: $bodyFont;
+    @include make-row;
+    font-family: $body-font;
     background: darken($grey, 2%);
     margin-bottom: 60px;
     padding: 60px 0;
-    @include make-row();
 
     .product-image {
         @include make-xs-column(12);
@@ -251,7 +252,7 @@ ul.progress-bars {
 }
 
 .review {
-  margin: 0px!important;
+    margin: 0;
 
     h1 {
         font-size: $font-size-base;
