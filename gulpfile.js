@@ -12,6 +12,7 @@ var gulp = require("gulp"),
     shell = require('gulp-shell'),
     jshint = require('gulp-jshint'),
     sassLint = require('gulp-sass-lint'),
+    exec = require('child_process').exec,
     env = argv.env || 'production';
 
 gulp.task('scss', function () {
@@ -82,10 +83,13 @@ gulp.task('min:js:widgets-inline', function() {
 });
 
 // TODO - Remove the version information from the generated js files
-gulp.task('angular:bootstrap', shell.task(
-    'npm install && grunt version:: build:pagination:rating', 
-    {quiet: true, cwd: 'bower_components/angular-bootstrap'}
-));
+gulp.task('angular:bootstrap', function(cb) {
+    exec('cd bower_components/angular-bootstrap && npm install && grunt version:: build:pagination:rating', function(err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
 
 gulp.task("min:js", ['angular:templates', 'angular:i18n', 'angular:bootstrap', 'min:js:widgets', 'min:js:widgets-inline']);
 
