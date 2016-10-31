@@ -1,3 +1,11 @@
+<div data-ng-show="loading" class="loading">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">{{ 'Loading' | translate }}...</span>
+</div>
+<div ng-show="ajaxError" class="alert alert-danger">
+    <p>{{ 'There was an error loading the information.' | translate }}</p>
+</div>
+
 <section ng-if="product" class="product-spotlight">
     <div class="product-image">
         <img data-ng-if="product.image.url" lazy-img="{{ product.image.url }}" alt="{{ product.image.alternateText || product.name }}" />
@@ -9,7 +17,3 @@
         </p>
     </div>
 </section>
-
-<div ng-if="ajaxError">
-    <p>There was an error loading the information.</p>
-</div>

@@ -31,9 +31,15 @@
                 var params = {productId: $scope.productId},
                     opts = {clientId: $scope.clientId},
                     success = function (p) { $scope.product = p; },
-                    error = function() { $scope.ajaxError = true; };
+                    error = function() { $scope.ajaxError = true; },
+                    loading = function() { $scope.loading = false; };
 
-                Product(opts).get(params, success, error);
+                $scope.loading = true;
+                Product(opts)
+                    .get(params)
+                    .$promise
+                    .then(success, error)
+                    .finally(loading);
             },
             templateUrl: 'reviews/distribution.html'
         };
@@ -50,9 +56,15 @@
                 var params = {productId: $scope.productId},
                     opts = {clientId: $scope.clientId},
                     success = function (p) { $scope.product = p; },
-                    error = function() { $scope.ajaxError = true; };
+                    error = function() { $scope.ajaxError = true; },
+                    loading = function() { $scope.loading = false; };
 
-                Product(opts).get(params, success, error);
+                $scope.loading = true;
+                Product(opts)
+                    .get(params)
+                    .$promise
+                    .then(success, error)
+                    .finally(loading);
             },
             templateUrl: 'reviews/product.html'
         };
@@ -71,7 +83,8 @@
                     sortField: 'DateCreated',
                     currentPage: 1,
                     pageSize: 25,
-                    maxSize: 10
+                    maxSize: 10,
+                    loading: true
                 };
 
                 $scope.$watchGroup(['list.sortField', 'list.currentPage'], function() {
@@ -83,9 +96,14 @@
                     },
                     opts = {clientId: $scope.clientId},
                     success = function(r) { $scope.reviews = r; },
-                    error = function() { $scope.ajaxError = true; };
+                    error = function() { $scope.ajaxError = true; },
+                    loading = function() { $scope.list.loading = false; };
 
-                    Product(opts).reviews(params, success, error);
+                    Product(opts)
+                        .reviews(params)
+                        .$promise
+                        .then(success, error)
+                        .finally(loading)
                 });
             },
             templateUrl: 'reviews/list.html'

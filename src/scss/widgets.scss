@@ -1,14 +1,17 @@
 .youzz-widgets {
     @import "components";
     @import "variables";
+    @import "reset";
+    @import "typography";
+    @import "reviews";
+
+    font-family: "Open Sans";
 
     .fa {
         font-family: "FontAwesome";
     }
 
-    font-family: "Open Sans";
-
-    @import "reset";
-    @import "typography";
-    @import "reviews";
+    .loading {
+        text-align: center;
+    }
 }

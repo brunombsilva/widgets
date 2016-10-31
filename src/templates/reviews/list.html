@@ -1,4 +1,11 @@
-<section ng-if="reviews" class="product-reviews">
+<div data-ng-show="list.loading" class="loading">
+    <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">{{ 'Loading' | translate }}...</span>
+</div>
+<div ng-show="ajaxError" class="alert alert-danger">
+    <p>{{ 'There was an error loading the information.' | translate }}</p>
+</div>
+<section data-ng-if="reviews" class="product-reviews">
     <div class="review-filters hidden-xs">
         <div class="filters">
             <select class="form-control" data-ng-model="list.sortField">
@@ -32,7 +39,6 @@
     </div>
     <div>
         <ul 
-            class="ng-hide"
             data-uib-pagination
             data-boundary-link-numbers="true"
             data-max-size="list.maxSize"
@@ -44,6 +50,3 @@
             data-ng-model="list.currentPage"></ul>
     </div>
 </section>
-<div ng-if="ajaxError">
-    <p>There was an error loading the information.</p>
-</div>
