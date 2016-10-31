@@ -55,6 +55,7 @@ gulp.task('min:js:widgets', function() {
 		'bower_components/angular-resource/angular-resource.js',
         'bower_components/angular-bootstrap/dist/ui-bootstrap-custom-2.2.0.js',
 		'bower_components/angular-translate/angular-translate.js',
+        'bower_components/angular-lazy-img/release/angular-lazy-img.js',
         'dist/js/templates.js',
 		'dist/js/i18n.js',
         'src/js/environments/' + env + '.js',

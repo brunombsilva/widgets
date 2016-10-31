@@ -11,7 +11,7 @@
     <div class="review-list">
         <article data-ng-cloak class="review" data-ng-repeat="review in reviews">
             <div class="review-image">
-                <div style="background-image: url('{{ review.reviewer.avatar }}');"></div>
+                <div lazy-img="{{ review.reviewer.avatar }}"></div>
             </div>
 
             <div class="review-content">
@@ -39,6 +39,8 @@
             data-ng-show="reviews.pagination.totalRecords > list.pageSize" 
             data-total-items="reviews.pagination.totalRecords"
             data-items-per-page="list.pageSize"
+            data-first-text="'<<'"
+            data-last-text="'>>'"
             data-ng-model="list.currentPage"></ul>
     </div>
 </section>

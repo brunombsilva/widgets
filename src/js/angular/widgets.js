@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
     
-    var module = angular.module('Youzz.Widgets', ['Youzz.Widgets.Reviews', 'pascalprecht.translate', 'Youzz.i18n']);
+    var module = angular.module('Youzz.Widgets', ['Youzz.Widgets.Reviews', 'pascalprecht.translate', 'Youzz.i18n', 'angularLazyImg']);
 
     module.config(['$translateProvider', 'Locales', 'defaultLocale', function($translateProvider, Locales, defaultLocale) {
         $translateProvider.useSanitizeValueStrategy('escape');

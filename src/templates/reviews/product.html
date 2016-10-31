@@ -1,6 +1,6 @@
 <section ng-if="product" class="product-spotlight">
     <div class="product-image">
-        <img data-ng-show="product.image" src="{{ product.image.url }}" alt="{{ product.image.alternateText || product.name }}" />
+        <img data-ng-if="product.image.url" lazy-img="{{ product.image.url }}" alt="{{ product.image.alternateText || product.name }}" />
     </div>
     <div class="product-description">
         <h2>{{ product.name }}</h2>
