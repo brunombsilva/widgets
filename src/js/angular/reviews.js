@@ -70,7 +70,7 @@
         };
     }]);
 
-    module.directive('reviewsList', ['Product', function(Product) {
+    module.directive('reviewsList', ['Product', '$location', '$anchorScroll', function(Product, $location, $anchorScroll) {
         return {
             restrict: "A",
             scope: {
@@ -95,9 +95,13 @@
                         sortField: $scope.list.sortField
                     },
                     opts = {clientId: $scope.clientId},
-                    success = function(r) { $scope.reviews = r; },
                     error = function() { $scope.ajaxError = true; },
-                    loading = function() { $scope.list.loading = false; };
+                    loading = function() { $scope.list.loading = false; },
+                    success = function(r) { 
+                        $scope.reviews = r;
+                        $location.hash('reviews-product-' + $scope.productId);
+                        $anchorScroll();
+                    };
 
                     Product(opts)
                         .reviews(params)

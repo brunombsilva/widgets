@@ -5,7 +5,8 @@
 <div ng-show="ajaxError" class="alert alert-danger">
     <p>{{ 'There was an error loading the information.' | translate }}</p>
 </div>
-<section data-ng-if="reviews" class="product-reviews">
+
+<section data-ng-if="reviews" class="product-reviews" id="reviews-product-{{ productId }}">
     <div class="review-filters hidden-xs">
         <div class="filters">
             <select class="form-control" data-ng-model="list.sortField">
