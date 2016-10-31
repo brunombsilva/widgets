@@ -1,0 +1,20 @@
+<div class="youzz-widgets">
+    <div class="{{ features.length > 1 ? 'reviews-full container' : null }}">
+        <div data-ng-if="featureEnabled('product')" data-reviews-product data-client-id="{{ clientId }}" data-product-id="{{ productId }}"></div>
+
+        <div class="row" data-ng-if="featureEnabled('list') && featureEnabled('distribution')">
+            <div class="col-md-3 col-xs-12">
+                <div data-reviews-distribution data-client-id="{{ clientId }}" data-product-id="{{ productId }}"></div>
+            </div>
+            <div class="col-md-9 col-xs-12">
+                <div data-reviews-list data-client-id="{{ clientId }}" data-product-id="{{ productId }}">
+            </div>
+        </div);
+
+        <!-- list xor distribution -->
+        <div data-ng-if="featureEnabled('list') != featureEnabled('distribution')">
+            <div data-ng-if="featureEnabled('list')" data-reviews-list data-client-id="{{ clientId }}" data-product-id="{{ productId }}">
+            <div data-ng-if="featureEnabled('distribution')" data-reviews-distribution data-client-id="{{ clientId }}" data-product-id="{{ productId }}"></div>
+        </div>
+    </div>
+</div>

@@ -1,28 +1,52 @@
-(function($, window, angular) {
+(function(window, document, angular) {
 	'use strict';
 
-	$(function() {
-		var container = document.querySelectorAll('[data-youzz-widgets]');
-		//Limitation: only 1 locale and client per page
-		var locale = container[0].dataset.youzzWidgetsLocale || 'pt';
+    var YouzzWidgets = {
+        modules: {
+            api: null,
+            widgets: null
+        },
+        loader: function() {
+            return document.YouzzWidgets.Loader || null;
+        },
+        config: function() {
+            return document.YouzzWidgets.Config;
+        },
+        initialize: function() {
+            var loader = this.loader() || null,
+                config = this.config(),
+                containers = document.querySelectorAll('[data-youzz-widget]'),
+                container = containers.length ? containers[0] : null,
+                locale = 'pt',
+                clientId;
 
-		var module = angular.module('Youzz.Widgets', ['Youzz.Widgets.Reviews', 'pascalprecht.translate', 'Youzz.i18n']);
-		angular.module('Youzz.Api')
-			.value('clientId', container[0].dataset.youzzWidgets)
-			.value('endpoint', 'http://192.168.99.1:5001/dev/');
+            if (loader) {
+                locale = loader.locale || locale;
+                clientId = loader.clientId;
+            } else if (container) {
+                locale = container.getAttribute('data-locale') || locale;
+                clientId = container.getAttribute('data-client-id');
+            }
 
-		module.config(['$translateProvider', 'Locales', function($translateProvider, Locales) {
-			$translateProvider.useSanitizeValueStrategy('escape');
+            this.modules.api = angular
+                .module('Youzz.Api')
+                .constant('clientId', clientId)
+                .constant('endpoint', config.apiUrl);
 
-			angular.forEach(Locales, function(value, key) {
-				$translateProvider.translations(key, value);
-			});
+            this.modules.widgets = angular
+                .module('Youzz.Widgets')
+                .constant('defaultLocale', locale);
 
-			$translateProvider.preferredLanguage(locale);
-		}]);
+            angular.forEach(containers, function(c) {
+                angular.bootstrap(c, ['Youzz.Widgets']);
+            });
+        }
+    };
 
-		angular.forEach(container, function(c) {
-			angular.bootstrap(c, ['Youzz.Widgets']);
-		});
-	});
-}(jQuery, window, angular));
+    document.YouzzWidgets.Instance = document.yw = YouzzWidgets;
+
+    // if no loader is present assume that no inline script was included and initialize all the widgets
+    if (!YouzzWidgets.loader()) {
+        YouzzWidgets.initialize();
+    }
+}(window, document, angular));

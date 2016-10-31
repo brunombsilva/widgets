@@ -10,6 +10,8 @@
     "First": "Primeira",
     "Last": "Última",
     "Previous": "Anterior",
-    "Next": "Seguinte"
+    "Next": "Seguinte",
+    "Loading": "A Carregar",
+    "There was an error loading the information.": "Houve um erro ao carregar a informação."
   }
 }

@@ -62,3 +62,8 @@ Push staging image:
     when: manual
 
 
+Lint Assets:
+  stage: test
+  script:
+    - docker run "$CONTAINER_IMAGE" /bin/sh -c "cd /srv/http/widgets && gulp lint"
+
