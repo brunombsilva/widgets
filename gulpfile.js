@@ -78,6 +78,9 @@ gulp.task('min:js:widgets', function() {
 gulp.task('min:js:widgets-inline', function() {
     return gulp.src(['src/js/environments/' + env + '.js', 'src/js/widgets.inline.js'])
         .pipe(concat('dist/js/widgets.inline.js'))
+        .pipe(gulp.dest('.'))
+        .pipe(uglify())
+        .pipe(concat('dist/js/widgets.inline.min.js'))
         .pipe(gulp.dest('.'));
 });
 
