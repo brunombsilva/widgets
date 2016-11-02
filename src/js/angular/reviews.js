@@ -138,9 +138,7 @@
     module.directive('youzzWidgetReviewsFull', function() {
         return {
             restrict: 'A',
-            templateUrl: function() {
-                return 'reviews/full.html';
-            },
+            templateUrl: 'reviews/full.html',
             scope: {
                 productId: '@',
                 clientId: '@'
