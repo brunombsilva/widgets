@@ -9,7 +9,7 @@
     <div class="summary">
         <div class="star-rating" aria-hidden="true">
             <ul>
-                <li data-ng-repeat="i in [1,2,3,4,5]">
+                <li data-ng-repeat="i in range(1,5)">
                 <i data-ng-show="product.reviewSummary.averageRating >= i" class="filled"></i>
                 <i data-ng-show="product.reviewSummary.averageRating > i-1 && product.reviewSummary.averageRating < i"class="half"></i>
                 <i data-ng-show="product.reviewSummary.averageRating <= i-1" class=""></i>
@@ -26,9 +26,9 @@
 
     <div class="distribution">
         <ul class="progress-bars">
-            <li data-ng-repeat="(value,frequency) in product.reviewSummary.ratingFrequencyDistribution">
+            <li data-ng-repeat="(k,v) in range(5,1)" ng-init="frequency = product.reviewSummary.ratingFrequencyDistribution[v];">
                 <div class="star-order">
-                    {{value}}
+                    {{v}}
                     <i class="fa fa-star"></i>
                 </div>
                 <div class="star-progress">

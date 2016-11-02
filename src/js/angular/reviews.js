@@ -35,6 +35,20 @@
                     loading = function() { $scope.loading = false; };
 
                 $scope.loading = true;
+                $scope.range = function (start, count) {
+                    var min = start > count ? count : start,
+                        max = start > count ? start : count,
+                        arr;
+
+                    arr = Array.apply(0, Array(max)).map(function(el, idx) { return idx + min; });
+
+                    if (start > count) {
+                        arr = arr.reverse();
+                    }
+
+                    return arr;
+                };
+
                 Product(opts)
                     .get(params)
                     .$promise
