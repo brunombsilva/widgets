@@ -145,7 +145,7 @@
             },
             link: function(scope, element, attrs) {
                 scope.features = angular.isUndefined(attrs.features) ? null : attrs.features.split('|');
-                scope.featureEnabled = function(feature) {
+                scope.isFeatureEnabled = function(feature) {
                     return !scope.features || scope.features.indexOf(feature) !== -1;
                 };
             }
