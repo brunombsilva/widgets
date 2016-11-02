@@ -92,14 +92,14 @@
                 clientId: '@'
             },
             link: function($scope) {
+                var firstLoad = true;
                 $scope.reviews = null;
                 $scope.list = {
                     sortField: 'DateCreated',
                     currentPage: 1,
                     pageSize: 25,
                     maxSize: 10,
-                    loading: true,
-                    firstLoad: true
+                    loading: true
                 };
 
                 $scope.$watchGroup(['list.sortField', 'list.currentPage'], function() {
@@ -115,12 +115,12 @@
                     success = function(r) { 
                         $scope.reviews = r;
 
-                        if (!$scope.list.firstLoad) {
+                        if (!firstLoad) {
                             $location.hash('reviews-product-' + $scope.productId);
                             $anchorScroll();
                         }
 
-                        $scope.list.firstLoad = false;
+                        firstLoad = false;
                     };
 
                     Product(opts)
