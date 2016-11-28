@@ -7,7 +7,6 @@ var gulp = require("gulp"),
     textTransformation = require('gulp-text-simple')
     templateCache = require('gulp-angular-templatecache')
     argv = require('yargs').argv,
-    cssPrefix = require('gulp-css-prefix'),
     uglify = require('gulp-uglify'),
     jshint = require('gulp-jshint'),
     sassLint = require('gulp-sass-lint'),

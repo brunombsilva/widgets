@@ -31,16 +31,24 @@
 				);
 				if (value.isArray) {
 					value.interceptor = {
-						response: function(response) {
-							response.resource.pagination = response.headers().pagination;
+					    response: function (response) {
+					        if (angular.isDefined(response.headers().pagination)) {
+					            response.resource.pagination = response.headers().pagination;
+					        }
 							return response.resource;
 						}
 					};
 
-					value.transformResponse = function(data, headers) {
-						var obj = angular.fromJson(data);
+					value.transformResponse = function (data, headers) {
+					    if (data == null) {
+					        return data;
+					    }
+					    var obj = angular.fromJson(data);
+					    if (angular.isArray(obj)) {
+					        return obj;
+					    }
 						headers().pagination = obj.pagination;
-						return obj.items;
+						return obj.items || obj;
 					};
 				}
 			});
