@@ -40,7 +40,7 @@
 					};
 
 					value.transformResponse = function (data, headers) {
-					    if (data == null) {
+					    if (data === null) {
 					        return data;
 					    }
 					    var obj = angular.fromJson(data);
