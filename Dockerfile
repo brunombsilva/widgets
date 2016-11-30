@@ -11,14 +11,16 @@ RUN npm install -g bower
 RUN npm install -g gulp
 RUN npm install -g grunt-cli
 
-ADD . /app
+ADD package.json /srv/http/widgets/package.json
+RUN cd /srv/http/widgets && npm install
 
-RUN cd /app && npm install
-RUN cd /app && bower install --allow-root
+ADD bower.json /srv/http/widgets/bower.json
+RUN cd /srv/http/widgets && bower install --allow-root
 
-RUN cd /app && gulp build
+ADD gulpfile.js
+RUN cd /srv/http/wdigets && gulp build
 
-RUN mkdir -p /srv/http && ln -s /app /srv/http/widgets
+ADD . /srv/http/widgets
 
 VOLUME  ["/srv/http/widgets"]
 CMD ["/usr/bin/tail", "-f", "/dev/null"]
