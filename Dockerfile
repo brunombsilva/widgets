@@ -11,8 +11,6 @@ RUN npm install -g bower
 RUN npm install -g gulp
 RUN npm install -g grunt-cli
 
-RUN mkdir -p /srv/http/widgets
-
 ADD package.json /srv/http/widgets/package.json
 RUN cd /srv/http/widgets && npm install
 
@@ -20,7 +18,7 @@ ADD bower.json /srv/http/widgets/bower.json
 RUN cd /srv/http/widgets && bower install --allow-root
 
 ADD gulpfile.js /srv/http/widgets/gulpfile.js
-RUN cd /srv/http/wdigets && gulp build
+RUN cd /srv/http/widgets && gulp build
 
 ADD . /srv/http/widgets
 
