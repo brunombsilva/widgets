@@ -17,7 +17,7 @@ RUN cd /srv/http/widgets && npm install
 ADD bower.json /srv/http/widgets/bower.json
 RUN cd /srv/http/widgets && bower install --allow-root
 
-ADD gulpfile.js
+ADD gulpfile.js /srv/http/widgets/gulpfile.js
 RUN cd /srv/http/wdigets && gulp build
 
 ADD . /srv/http/widgets
