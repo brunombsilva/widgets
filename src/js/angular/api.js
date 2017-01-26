@@ -14,6 +14,29 @@
             return obj;
         };
 
+	    // accumulates a set of interceptor objects to be appended to each action
+	    // @link https://docs.angularjs.org/api/ngResource/service/$resource
+        var interceptorPipeline = function(interceptors) {
+            var decorate = function (response, func) {
+                for (var i in interceptors) {
+                    if (typeof interceptors[i][func] === 'function') {
+                        response = interceptors[i][func](response);
+                    }
+                }
+
+                return response;
+            };
+
+            return {
+                response: function (response) {
+                    return decorate(response, 'response');
+                },
+                responseError: function (response) {
+                    return decorate(response, 'responseError');
+                }
+            }
+        };
+
 		return function(path, paramDefaults, actions, options) {
 			options = angular.extend({clientId: clientId}, clean(options));
             actions = angular.extend({}, actions);
@@ -26,19 +49,19 @@
 				value.headers = angular.extend({},
 					value.headers, {
 						'ClientId': options.clientId
-							//'Authorization': 'Bearer ' + token
 					}
 				);
-				if (value.isArray) {
-					value.interceptor = {
-					    response: function (response) {
-					        if (angular.isDefined(response.headers().pagination)) {
-					            response.resource.pagination = response.headers().pagination;
-					        }
-							return response.resource;
-						}
-					};
 
+				var originalInterceptor = value.interceptor || {};
+				if (value.isArray) {
+				    var newInterceptor = function (response) {
+				        if (angular.isDefined(response.headers().pagination)) {
+				            response.resource.pagination = response.headers().pagination;
+				        }
+				        return response.resource;
+				    };
+
+				    value.interceptor = interceptorPipeline([originalInterceptor, { response: newInterceptor }]);
 					value.transformResponse = function (data, headers) {
 					    if (data === null) {
 					        return data;
