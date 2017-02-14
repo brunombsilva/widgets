@@ -3,7 +3,7 @@ FROM ubuntu:trusty
 ENV DEBIAN_FRONTEND=noninteractive
 ARG BUILD_ENVIRONMENT=production
 
-##Install dependecies
+#Install dependecies
 RUN  apt-get update
 RUN  apt-get -y install curl
 
@@ -20,6 +20,7 @@ ADD bower.json /srv/http/widgets/bower.json
 RUN cd /srv/http/widgets && bower install --allow-root
 
 ADD gulpfile.js /srv/http/widgets/gulpfile.js
+ADD src /srv/http/widgets/src
 RUN cd /srv/http/widgets && gulp --env="$BUILD_ENVIRONMENT" build
 
 ADD . /srv/http/widgets
