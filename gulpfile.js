@@ -11,6 +11,7 @@ var gulp = require("gulp"),
     jshint = require('gulp-jshint'),
     sassLint = require('gulp-sass-lint'),
     exec = require('child_process').exec,
+    sequence = require('gulp-sequence'),
     env = argv.env || 'production';
 
 gulp.task('scss', function () {
@@ -92,7 +93,7 @@ gulp.task('angular:bootstrap', function(cb) {
     });
 });
 
-gulp.task("min:js", ['angular:templates', 'angular:i18n', 'angular:bootstrap', 'min:js:widgets', 'min:js:widgets-inline']);
+gulp.task("min:js", sequence('angular:templates', 'angular:i18n', 'angular:bootstrap', 'min:js:widgets', 'min:js:widgets-inline'));
 
 gulp.task('fonts:font-awesome', function () {
     return gulp.src(['bower_components/font-awesome/fonts/*'])
