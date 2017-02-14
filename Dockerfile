@@ -1,5 +1,7 @@
 FROM ubuntu:trusty
-ENV DEBIAN_FRONTEND noninteractive
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV BUILD_ENVIRONMENT=production
 
 #Install dependecies
 RUN  apt-get update
@@ -18,7 +20,7 @@ ADD bower.json /srv/http/widgets/bower.json
 RUN cd /srv/http/widgets && bower install --allow-root
 
 ADD gulpfile.js /srv/http/widgets/gulpfile.js
-RUN cd /srv/http/widgets && gulp build
+RUN cd /srv/http/widgets && gulp --env=$BUILD_ENVIRONMENT build
 
 ADD . /srv/http/widgets
 

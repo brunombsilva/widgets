@@ -18,13 +18,13 @@ variables:
 before_script:
     - export CONTAINER_IMAGE=$DOCKER_REGISTRY/$PROJECT_USER/$PROJECT_NAME:${CI_BUILD_REF_NAME/\//-}
     - export CONTAINER_RELEASE_IMAGE=$DOCKER_REGISTRY/$PROJECT_USER/$PROJECT_NAME:$CI_BUILD_TAG
+    - export BUILD_ENVIRONMENT=$([ "$CI_BUILD_REF_NAME" == "develop" ] && echo "staging" || echo "production")
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $DOCKER_REGISTRY
 
 # create the composer image for the current build job
 Build docker image:
   stage: build
   script:
-    #- echo "$DEPLOY_KEY" > deploy_rsa
     - docker build -t $CONTAINER_IMAGE .
 
 # create and push the image to the registry if a tag new was pushed - these are the images used to deploy
@@ -56,7 +56,6 @@ Push staging image:
 "Build & register image":
     stage: build
     script:
-        #- echo "$DEPLOY_KEY" > deploy_rsa
         - docker build -t $CONTAINER_IMAGE .
         - docker push $CONTAINER_IMAGE
     when: manual
