@@ -53,9 +53,9 @@ ID 23:
 
 You can find a couple of examples here:
 
-    * [examples/embed.html] - using the inline script
+* [examples/embed.html](using the inline script)
 
-    * [examples/full.html] - using the data attributes
+* [examples/full.html](using the data attributes)
 
 ---
 
