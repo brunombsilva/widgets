@@ -20,10 +20,8 @@ ADD bower.json /srv/http/widgets/bower.json
 RUN cd /srv/http/widgets && bower install --allow-root
 
 ADD gulpfile.js /srv/http/widgets/gulpfile.js
-ADD src /srv/http/widgets/src
-RUN cd /srv/http/widgets && gulp --env="$BUILD_ENVIRONMENT" build
-
 ADD . /srv/http/widgets
+RUN cd /srv/http/widgets && gulp --env="$BUILD_ENVIRONMENT" build
 
 VOLUME  ["/srv/http/widgets"]
 CMD ["/usr/bin/tail", "-f", "/dev/null"]
