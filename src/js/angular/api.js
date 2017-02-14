@@ -34,7 +34,7 @@
                 responseError: function (response) {
                     return decorate(response, 'responseError');
                 }
-            }
+            };
         };
 
 		return function(path, paramDefaults, actions, options) {
